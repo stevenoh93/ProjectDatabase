@@ -1,0 +1,68 @@
+package server;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.*;
+import java.util.ArrayList;
+
+public class RelationMaker {
+	
+	private Statement s;
+	private final int MAX_STUDENTS_PER_PROJ = 4;
+	private final int MAX_FACULTY_PER_PROJ = 1;
+	
+	public RelationMaker(Statement s) {
+		this.s = s;
+	}
+	
+	/**
+	 * Make queries to this statement
+	 * @param studentsPath
+	 * @param facultyPath
+	 * @param projectsPath
+	 * @param depPath
+	 */
+	public void populateTables(String studentsPath, String facultyPath, String projectsPath, String coursesPath) {
+		BufferedReader students = null, faculty = null, projects = null, courses = null;
+		int stuCount = 0, facCount = 0, projCount = 0, courseCount = 0;
+		try {
+			students = new BufferedReader(new FileReader(studentsPath));
+			faculty = new BufferedReader(new FileReader(facultyPath));
+			projects = new BufferedReader(new FileReader(projectsPath));
+			courses = new BufferedReader(new FileReader(coursesPath));
+			
+			String curLine;
+			
+			students.readLine(); //skip line with heading
+			String[] splitLine;
+			while((curLine = students.readLine()) != null) {
+				splitLine = curLine.split(",");
+				s.executeQuery("INSERT INTO students(firstName, lastName, email, dname, gradYear) VALUES('" + splitLine[0] + "', '" + splitLine[1] + "', '" + splitLine[2] + "', '" + splitLine[3] 
+						+ "', " + splitLine[4] + ");");
+				stuCount++;
+			}
+		
+			while((curLine = faculty.readLine()) != null) {
+				splitLine = curLine.split(",");
+				s.executeQuery("INSERT INTO students(firstName, lastName, email, dname, gradYear) VALUES('" + splitLine[0] + "', '" + splitLine[1] + "', '" + splitLine[2] + "', '" + splitLine[3] 
+						+ "', " + splitLine[4] + ");");
+				stuCount++;
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(students != null) students.close();
+				if(faculty != null) faculty.close();
+				if(projects != null) projects.close();
+				if(courses != null) courses.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}

@@ -1,0 +1,15 @@
+package server;
+
+import java.sql.*;
+
+public class RelationMaker {
+	
+	private Statement s;
+	
+	public RelationMaker() {
+		
+	}
+	
+	public static 
+
+}

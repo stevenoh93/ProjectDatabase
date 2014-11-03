@@ -1,0 +1,103 @@
+package server;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.*;
+import java.util.ArrayList;
+
+public class RelationMaker {
+	
+	private Statement s;
+	private final int MAX_STUDENTS_PER_PROJ = 4;
+	private final int MAX_FACULTY_PER_PROJ = 1;
+	
+	public RelationMaker(Statement s) {
+		this.s = s;
+	}
+	
+	/**
+	 * Make queries to this statement
+	 * @param studentsPath
+	 * @param facultyPath
+	 * @param projectsPath
+	 * @param depPath
+	 */
+	public void populateTables(String studentsPath, String facultyPath, String projectsPath, String coursesPath) {
+		BufferedReader students = null, faculty = null, projects = null, courses = null;
+		int stuCount = 0, facCount = 0, projCount = 0, courseCount = 0;
+		try {
+			students = new BufferedReader(new FileReader(studentsPath));
+			faculty = new BufferedReader(new FileReader(facultyPath));
+			projects = new BufferedReader(new FileReader(projectsPath));
+			courses = new BufferedReader(new FileReader(coursesPath));
+			
+			String curLine;
+			String[] splitLine;
+			ResultSet rs;
+			
+			/* Populate students */
+			students.readLine(); //skip line with heading
+			s.executeQuery("SELECT DISTINCT(dname) FROM departments");
+			rs = s.getResultSet();
+			rs.next();
+			while((curLine = students.readLine()) != null) {
+				splitLine = curLine.split(",");
+				s.executeQuery("INSERT INTO students(firstName, lastName, email, gradYear, dname) VALUES('" + splitLine[0] + "', '" + splitLine[1] + "', '" 
+						+ splitLine[2] + "', " + splitLine[3] + ", '" + rs.getString("dname") + "');");
+				stuCount++;
+				if(rs.isLast())
+					rs.first();
+				else
+					rs.next();
+			}
+			/* Populate faculty */
+			faculty.readLine(); //skip header
+			while((curLine = faculty.readLine()) != null) {
+				splitLine = curLine.split(",");
+				s.executeQuery("INSERT INTO faculty(firstName, lastName, email, dname) VALUES('" + splitLine[0] + "', '" + splitLine[1] + "', '" + splitLine[2] 
+						+ "', '" + splitLine[3] + "', '" + rs.getString("dname") + "');");
+				facCount++;
+				if(rs.isLast())
+					rs.first();
+				else
+					rs.next();
+			}
+			/* Populate courses */
+			courses.readLine(); //skip header
+			while((curLine = courses.readLine()) != null) {
+				splitLine = curLine.split(",");	
+				s.executeQuery("INSERT INTO courses(cname, courseDesc) VALUES('" + splitLine[0] + "', '" + splitLine[1] + "');");
+				courseCount++;
+			}
+			/* Populate projects, assign random class to each one */
+			projects.readLine(); //skip header
+			s.executeQuery("SELECT cid FROM courses");
+			rs = s.getResultSet();
+			rs.next();
+			while((curLine = projects.readLine()) != null) {
+				splitLine = curLine.split(",");
+				s.executeQuery("INSERT INTO projects(projectDesc, term, coverPhotoPath, docPath, likes, cid) VALUES('" + splitLine[0] + "', '" + splitLine[1]
+						+ "', '" + splitLine[2]	+ "', '" + splitLine[3] + "', " + splitLine[4] + ", '" + rs.getString("cid") +"');");
+				projCount++;
+				if(rs.isLast())
+					rs.first();
+				else
+					rs.next();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(students != null) students.close();
+				if(faculty != null) faculty.close();
+				if(projects != null) projects.close();
+				if(courses != null) courses.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
