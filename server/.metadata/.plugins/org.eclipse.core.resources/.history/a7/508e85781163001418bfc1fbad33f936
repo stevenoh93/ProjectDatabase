@@ -14,9 +14,7 @@ public class JdbcManager {
 				Statement s = con.createStatement();
 				RelationMaker rel = new RelationMaker(s);
 				//rel.populateTables("D:\\Projects\\ProjectDatabase\\Students.csv", "D:\\Projects\\ProjectDatabase\\Faculty.csv", "D:\\Projects\\ProjectDatabase\\Projects.csv", "D:\\Projects\\ProjectDatabase\\Courses.csv");
-				//rel.relate();
-				
-				
+				rel.relate();
 				s.close();
 			}
 		}

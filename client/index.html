@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="css/social-icons.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="" type="text/css" media="screen" id="css-skins" />
+
 		<!--[if IE 8]>
 			<link rel="stylesheet" type="text/css" media="screen" href="css/ie8-hacks.css" />
 		<![endif]-->
@@ -17,15 +18,13 @@
 		<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:light' rel='stylesheet' type='text/css'>
 		
 		<!-- JS -->
-		<script src="js/jquery-1.5.1.min.js"></script>
+		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/jquery-ui-1.8.13.custom.min.js"></script>
 		<script src="js/easing.js"></script>
 		<script src="js/jquery.scrollTo-1.4.2-min.js"></script>
 		<script src="js/slides.min.jquery.js"></script>
 		<script src="js/moveForm.js"></script>
 		<script src="js/custom.js"></script>
-		<script src="js/loadMainPage.js" type="application/javascript"></script>
-		
 		<!--[if IE]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -62,6 +61,15 @@
 		<link rel="stylesheet" href="js/poshytip-1.0/src/tip-yellowsimple/tip-yellowsimple.css" type="text/css" />
 		<script type="text/javascript" src="js/poshytip-1.0/src/jquery.poshytip.min.js"></script>
 		<!-- ENDS poshytip -->
+		
+		<!-- pagination -->
+		<script type="text/javascript" src="js/jquery.simplePagination.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/simplePagination.css"/>
+		<!-- ENDS pagination -->
+		
+		<!-- onLoad -->
+		<script src="js/loadMainPage.js" type="application/javascript"></script>
+		<!-- ENDS onLoad -->
 				
 	</head>
 	
@@ -207,16 +215,9 @@
 							</div>
 						</li>
 					</ul>
-					<script type="application/javascript">
-						document.getElementById("Item4").innerHTML = '<a href="project.html" class="thumb" title="An image"><img src="img/dummies/300x200d.gif" alt="Post" /></a> \
-							<div class="excerpt"> \
-								<a href="project.html" class="header">Lorem ipsum dolor</a> \
-								<a href="project.html" class="text">This content is changed with javascript</a> \
-								<div class="meta">Admin on 23 Jun, 2010</div> \
-							</div>'
-					</script>
 					
 					<!-- pager -->	
+					<!--
 					<ul class='pager'>
 						<li class='first-page'><a href='#'>&laquo;</a></li>
 						<li><a href='#' >&lsaquo;</a></li>
@@ -228,19 +229,24 @@
 						<li><a href='#' >&rsaquo;</a></li>
 						<li class='last-page'><a href='#'>&raquo;</a></li>
 					</ul>
+					-->
+					<div id = "pagination"></div>
+											
 					<div class="clear"></div>
 					<!-- ENDS pager -->
-						
+					
 						
 				</div>
+				
 				<!-- ENDS posts -->
 				
 			<div class="clear"></div>
 			</div>
 			<!-- ENDS wrapper-main -->
+			
 		</div>
 		<!-- ENDS MAIN -->
-
+		
 
 		<!-- FOOTER -->
 <!--		<div id="footer">
