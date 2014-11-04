@@ -1,7 +1,5 @@
 //Script to load projects
 $( document ).ready(function() {
-	
-	loadXMLDoc();
 	$("#Item1").html(' \
 		<a href="project.html" class="thumb" title="An image"><img src="img/dummies/300x200.gif" alt="Post" /></a> \
 							<div class="excerpt"> \
@@ -10,6 +8,7 @@ $( document ).ready(function() {
 								<div class="meta">Admin on 23 Jun, 2010</div> \
 							</div> \
 	');
+	loadXMLDoc();
 });
 
 function loadXMLDoc() {
@@ -27,7 +26,7 @@ function loadXMLDoc() {
 		$("#Item1").html(xmlhttp.responseText);
 	  }
 	}
-	xmlhttp.open("GET","test.txt",true);
+	xmlhttp.open("GET","http://72.76.204.54:",true);
 	xmlhttp.send();
 	
 }
