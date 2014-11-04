@@ -9,8 +9,3 @@ $( document ).ready(function() {
 			</div>' );
 });
 
-
-$('#light-pagination').pagination({
-	pages: 20,
-	cssStyle: 'light-theme'
-});

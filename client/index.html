@@ -65,12 +65,12 @@
 		
 		<!-- pagination -->
 		<link type="text/css" rel="stylesheet" href="css/simplePagination.css"/>
-		<script type="text/javascript" src="js/jquery.simplePagination.js"></script>
 		<!-- ENDS pagination -->
 		
 		<!-- onLoad -->
 		<script type="text/javascript" src="js/loadMainPage.js"></script>
 		<!-- ENDS onLoad -->
+		
 	</head>
 	
 	
@@ -233,8 +233,9 @@
 					</ul>
 					-->
 
-							<div id="light-pagination" class="pagination"></div>
-
+					<div class="pagination-holder clearfix">
+						<div id="light-pagination" class="pagination"></div>
+					</div>
 											
 					<div class="clear"></div>
 					<!-- ENDS pager -->
@@ -338,5 +339,13 @@
 		</div>
 		<!-- ENDS Bottom -->
 	
+	<script type="text/javascript" src="js/jquery.simplePagination.js"></script>
+	<script type="text/javascript">
+			$('#light-pagination').pagination({
+				pages: 20,
+				cssStyle: 'light-theme'
+			});
+	</script>
+		
 	</body>
 </html>	
