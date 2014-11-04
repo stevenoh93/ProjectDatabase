@@ -18,7 +18,8 @@
 		<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:light' rel='stylesheet' type='text/css'>
 		
 		<!-- JS -->
-		<script src="js/jquery-1.11.1.min.js"></script>
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+		<script src="js/jquery-1.5.1.min.js"></script>
 		<script src="js/jquery-ui-1.8.13.custom.min.js"></script>
 		<script src="js/easing.js"></script>
 		<script src="js/jquery.scrollTo-1.4.2-min.js"></script>
@@ -63,15 +64,16 @@
 		<!-- ENDS poshytip -->
 		
 		<!-- pagination -->
-		<script type="text/javascript" src="js/jquery.simplePagination.js"></script>
 		<link type="text/css" rel="stylesheet" href="css/simplePagination.css"/>
+		<script type="text/javascript" src="js/jquery.simplePagination.js"></script>
 		<!-- ENDS pagination -->
 		
 		<!-- onLoad -->
-		<script src="js/loadMainPage.js" type="application/javascript"></script>
+		<script type="text/javascript" src="js/loadMainPage.js"></script>
 		<!-- ENDS onLoad -->
-				
 	</head>
+	
+	
 	
 	<body>
 
@@ -230,7 +232,9 @@
 						<li class='last-page'><a href='#'>&raquo;</a></li>
 					</ul>
 					-->
-					<div id = "pagination"></div>
+
+							<div id="light-pagination" class="pagination"></div>
+
 											
 					<div class="clear"></div>
 					<!-- ENDS pager -->
@@ -328,7 +332,7 @@
 			<!-- wrapper-bottom -->
 			<div class="wrapper">
 				<div id="bottom-text">ECE464 Project for Steven Oh and Akshay Joshi</div>
-				<div  class="to-top poshytip" title="To top">to top</div>
+				<div  class="to-top poshytip" title="To top"><a href='#' >to top</div>
 			</div>
 			<!-- ENDS wrapper-bottom -->
 		</div>
