@@ -3,5 +3,9 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/MySQL/MySQL Connector J/mysql-connector-java-5.1.33-bin.jar"/>
+	<classpathentry kind="lib" path="D:/School/eclipse/jars/jabsorb-1.3.2.jar"/>
+	<classpathentry kind="lib" path="D:/java_ee_sdk-7u1/glassfish4/mq/lib/javax.json.jar"/>
+	<classpathentry kind="lib" path="D:/java_ee_sdk-7u1/glassfish4/mq/lib/javax.servlet-api.jar"/>
+	<classpathentry kind="lib" path="D:/java_ee_sdk-7u1/glassfish4/mq/lib/javax.transaction-api.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,10 @@
+package server;
+
+import org.jabsorb.JSONRPCServlet;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+public class JsonProjects extends JSONRPCServlet{
+	HttpSesion session = request.getSession();
+}

@@ -26,7 +26,7 @@ function loadXMLDoc() {
 		$("#Item1").html(xmlhttp.responseText);
 	  }
 	}
-	xmlhttp.open("GET","http://72.76.204.54:",true);
+	xmlhttp.open("GET","../img/minion.jpg",true);
 	xmlhttp.send();
 	
 }

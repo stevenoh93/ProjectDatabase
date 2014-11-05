@@ -19,4 +19,23 @@
 <entry path="C:\Program Files\Java\jre1.8.0_20\lib\endorsed"/>
 </endorsedDirs>
 </libraryInfo>
+<libraryInfo home="D:\School\eclipse" version="1.8.0_20">
+<bootpath>
+<entry path="D:\lib\resources.jar"/>
+<entry path="D:\lib\rt.jar"/>
+<entry path="D:\lib\sunrsasign.jar"/>
+<entry path="D:\lib\jsse.jar"/>
+<entry path="D:\lib\jce.jar"/>
+<entry path="D:\lib\charsets.jar"/>
+<entry path="D:\lib\jfr.jar"/>
+<entry path="D:\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="D:\lib\ext"/>
+<entry path="C:\Windows\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="D:\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
 </libraryInfos>
