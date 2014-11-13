@@ -1,4 +1,6 @@
 // Jquery with no conflict
+// var mysql = require('mysql');
+
 jQuery(document).ready(function($) {
 	
 	// Slides ------------------------------------------------------ //
@@ -156,8 +158,9 @@ jQuery(document).ready(function($) {
 								<div class="meta">Admin on 23 Jun, 2010</div> \
 							</div> \
 	');
-		
-//close			
+
+	loadJSONDoc();
+	
 });
 	
 // Make AJAX request
@@ -176,7 +179,7 @@ function loadJSONDoc() {
 		$("#Item1").html(xmlhttp.responseText);
 	  }
 	}
-	xmlhttp.open("GET","http://72.76.204.54:8080/JsonProjects",true);
+	xmlhttp.open("GET","http://localhost:8888/init",true);
 	xmlhttp.send(null);
 }
 
