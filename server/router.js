@@ -1,10 +1,8 @@
-function route(pathname) {
+function route(pathname,request, response) {
 	console.log("About to route a request for " + pathname);
-	switch(pathname) {
-		case "init":
-			console.log("Routed to init");
-			break;
-	}
+	
+	if(pathname == '/init')
+		console.log("blabhablh");
 }
 
 exports.route = route;
