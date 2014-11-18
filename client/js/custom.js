@@ -160,26 +160,6 @@ jQuery(document).ready(function($) {
 	
 // Make AJAX request
 function loadJSONDoc() {
-	// var xmlhttp;
-	// if (window.XMLHttpRequest) {
-	//   // code for IE7+, Firefox, Chrome, Opera, Safari
-	//   xmlhttp=new XMLHttpRequest();
-	// }
-	// else {
-	//   // code for IE6, IE5
-	//   xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	// }
-	// xmlhttp.onreadystatechange=function() {
-	//   if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-	//   	var resParse = JSON.parse(xmlhttp.responseText);
-	//   	console.log(resParse);
-	// 	$("#Item1").html(resParse);
-	//   }
-	// }
-	// xmlhttp.open("GET","http://72.76.204.54:8080/init",true);
-	// //xmlhttp.open("GET","http://:8080/init",true);
-	// xmlhttp.send(null);
-
 	var method = 'GET'
 	var url = 'http://72.76.204.54:8888/init'
 	
@@ -190,7 +170,10 @@ function loadJSONDoc() {
 	}
 	xhr.onload = function() {
 		var text = xhr.responseText;
-		console.log(text);
+		var jsonInitData = JSON.parse(text);
+		for(var d in jsonInitData) {
+			console.log(jsonInitData[d]);
+		}
 	};
 	xhr.onerror = function() {
 		alert('Woops, there was an error making the request.');
