@@ -23,10 +23,10 @@ function start(route) {
 			localPath += filename;
 			fs.exists(localPath, function(exists) {
 				if(exists) {
-					console.log("Serving file: " + localPath);
+					// console.log("Serving file: " + localPath);
 					getFile(localPath, response, isValidExt);
 				} else {
-					console.log("File not found: " + localPath);
+					// console.log("File not found: " + localPath);
 					response.writeHead(404);
 					response.end();
 				}
@@ -38,38 +38,19 @@ function start(route) {
 			switch(pathname) {
 				case "/init": //Load projects in sorted order by likes
 					console.log("Routed to init");
-					// Get top 18 projects
-					fs.readFile("../client/index.html", function(error, htmlContent) {
-						if(error) {
-							console.log("Error page");
-							response.writeHead(404,{"Content-Type":"text/plain"});
-							response.end("Sorry the page was not found");
-						} else {
-							mysql.connect(function(err) {
-								if(err) {
-									response.writeHead(404,{"Content-Type":"text/plain"});
-									response.end("Sorry the page was not found");
-								} else {
-									var query = "SELECT * FROM ece464.projects P ORDER BY likes DESC LIMIT 1";
-									console.log("Querying MySQL");
-									mysql.makeQuery(query, function(rows) {
-										// Wrap JSON
-										response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
-										for(var i=0; i<rows.legnth; i++) {
-											response.write(JSON.stringfy(rows[i]));
-										}
-										response.end();
-									});
-								}
-							});
+					var query = "SELECT * FROM ece464.projects P ORDER BY likes DESC LIMIT 18";
+					mysql.makeQuery(query, function(rows) {
+						// Wrap JSON
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						for(var i in rows) {
+							response.write(JSON.stringify(rows[i]));
 						}
-							
+						response.end();
 					});
 				break;
 			}
 		}
-
-	}).listen(8080);
+	}).listen(8888);
 	console.log("Server has started");
 }
 
