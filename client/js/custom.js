@@ -176,10 +176,11 @@ function loadJSONDoc() {
 	}
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-		$("#Item1").html(xmlhttp.responseText);
+	  	var resParse = JSON.parse(xmlhttp.responseText);
+		$("#Item1").html(resParse);
 	  }
 	}
-	xmlhttp.open("GET","http://localhost:8888/init",true);
+	xmlhttp.open("GET","http://72.76.204.54:8888/init",true);
 	xmlhttp.send(null);
 }
 

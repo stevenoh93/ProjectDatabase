@@ -50,12 +50,14 @@ function start(route) {
 									response.writeHead(404,{"Content-Type":"text/plain"});
 									response.end("Sorry the page was not found");
 								} else {
-									var query = "SELECT * FROM ece464.projects P ORDER BY likes DESC LIMIT 18";
-									console.log("File read");
+									var query = "SELECT * FROM ece464.projects P ORDER BY likes DESC LIMIT 1";
+									console.log("Querying MySQL");
 									mysql.makeQuery(query, function(rows) {
 										// Wrap JSON
 										response.writeHead(200, {'Content-Type': 'application/json' });
-										response.send(JSON.stringify(rows));
+										for(var i=0; i<rows.legnth; i++) {
+											response.write(JSON.stringfy(rows[i]));
+										}
 										response.end();
 									});
 								}
