@@ -177,6 +177,7 @@ function loadJSONDoc() {
 	xmlhttp.onreadystatechange=function() {
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 	  	var resParse = JSON.parse(xmlhttp.responseText);
+	  	console.log(resParse);
 		$("#Item1").html(resParse);
 	  }
 	}
