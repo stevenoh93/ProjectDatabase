@@ -17,34 +17,34 @@ jQuery(document).ready(function($) {
 		
 	// Poshytips ------------------------------------------------------ //
 	
-    $('.poshytip').poshytip({
-    	className: 'tip-twitter',
-		showTimeout: 1,
-		alignTo: 'target',
-		alignX: 'center',
-		offsetY: 5,
-		allowTipHover: false
-    });
+  //   $('.poshytip').poshytip({
+  //   	className: 'tip-twitter',
+		// showTimeout: 1,
+		// alignTo: 'target',
+		// alignX: 'center',
+		// offsetY: 5,
+		// allowTipHover: false
+  //   });
     
     
     // Poshytips Forms ------------------------------------------------------ //
     
-    $('.form-poshytip').poshytip({
-		className: 'tip-yellowsimple',
-		showOn: 'focus',
-		alignTo: 'target',
-		alignX: 'right',
-		alignY: 'center',
-		offsetX: 5
-	});
+ //    $('.form-poshytip').poshytip({
+	// 	className: 'tip-yellowsimple',
+	// 	showOn: 'focus',
+	// 	alignTo: 'target',
+	// 	alignX: 'right',
+	// 	alignY: 'center',
+	// 	offsetX: 5
+	// });
 	
-	// Superfish menu ------------------------------------------------------ //
+	// // Superfish menu ------------------------------------------------------ //
 	
-	$("ul.sf-menu").superfish({ 
-        animation: {height:'show'},   // slide-down effect without fade-in 
-        delay:     800 ,              // 1.2 second delay on mouseout 
-        autoArrows:  false
-    });
+	// $("ul.sf-menu").superfish({ 
+ //        animation: {height:'show'},   // slide-down effect without fade-in 
+ //        delay:     800 ,              // 1.2 second delay on mouseout 
+ //        autoArrows:  false
+ //    });
     
     // Scroll to top ------------------------------------------------------ //
     
@@ -58,12 +58,7 @@ jQuery(document).ready(function($) {
 		$.scrollTo( '0px', 300 );
 	});
 	
-	// Scroll to hire me ------------------------------------------------------ //
-    
-	$('#hire').click(function(){
-		$.scrollTo( $('#footer'), 300 );
-	});
-		
+
 	// Submenu rollover --------------------------------------------- //
 	
 	$("ul.sf-menu>li>ul li").hover(function() { 
@@ -158,7 +153,7 @@ jQuery(document).ready(function($) {
 								<div class="meta">Admin on 23 Jun, 2010</div> \
 							</div> \
 	');
-
+	console.log("hello");
 	loadJSONDoc();
 	
 });
@@ -181,7 +176,8 @@ function loadJSONDoc() {
 		$("#Item1").html(resParse);
 	  }
 	}
-	xmlhttp.open("GET","http://72.76.204.54:8888/init",true);
+	xmlhttp.open("GET","http://72.76.204.54:8080/init",true);
+	//xmlhttp.open("GET","http://:8080/init",true);
 	xmlhttp.send(null);
 }
 

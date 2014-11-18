@@ -54,7 +54,7 @@ function start(route) {
 									console.log("Querying MySQL");
 									mysql.makeQuery(query, function(rows) {
 										// Wrap JSON
-										response.writeHead(200, {'Content-Type': 'application/json' });
+										response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
 										for(var i=0; i<rows.legnth; i++) {
 											response.write(JSON.stringfy(rows[i]));
 										}
@@ -69,7 +69,7 @@ function start(route) {
 			}
 		}
 
-	}).listen(8888);
+	}).listen(8080);
 	console.log("Server has started");
 }
 
