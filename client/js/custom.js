@@ -154,15 +154,14 @@ jQuery(document).ready(function($) {
 							</div> \
 	');
 	
-	loadJSONDoc();
+	var data = makeCORSRequest('GET','http://72.76.204.54:8888/init')
+	// Load initial data to page
+	var ids = $(".blocks-thumbs").map(function() {return this.id;}).toArray();
 	
 });
 	
 // Make AJAX request
-function loadJSONDoc() {
-	var method = 'GET'
-	var url = 'http://72.76.204.54:8888/init'
-	
+function makeCORSRequest(method, url) {
 	var xhr = createCORSRequest(method, url);
 	if (!xhr) {
 		alert('CORS not supported');
@@ -170,12 +169,10 @@ function loadJSONDoc() {
 	}
 	xhr.onload = function() {
 		var text = xhr.responseText.split(";");
-		// var text = xhr.responseText;
-		// console.log(text);
-		// var jsonInitData = JSON.parse(text);
-		for(var d in text) {
-			console.log(JSON.parse(text[d]).pid);
-		}
+		// for(var d in text) {
+		// 	console.log(JSON.parse(text[d]).pid);
+		// }
+		return text;
 	};
 	xhr.onerror = function() {
 		alert('Woops, there was an error making the request.');
@@ -183,6 +180,7 @@ function loadJSONDoc() {
 
 	xhr.send();
 }
+
 
 function createCORSRequest(method, url) {
 	var xhr = new XMLHttpRequest();
