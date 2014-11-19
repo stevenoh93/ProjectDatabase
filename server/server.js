@@ -43,7 +43,7 @@ function start(route) {
 						// Wrap JSON
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 						for(var i in rows) {
-							response.write(JSON.stringify(rows[i]));
+							response.write(JSON.stringify(rows[i]) + ";");
 						}
 						response.end();
 					});

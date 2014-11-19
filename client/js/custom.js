@@ -169,10 +169,12 @@ function loadJSONDoc() {
 		return;
 	}
 	xhr.onload = function() {
-		var text = xhr.responseText;
-		var jsonInitData = JSON.parse(text);
-		for(var d in jsonInitData) {
-			console.log(jsonInitData[d]);
+		var text = xhr.responseText.split(";");
+		// var text = xhr.responseText;
+		// console.log(text);
+		// var jsonInitData = JSON.parse(text);
+		for(var d in text) {
+			console.log(JSON.parse(text[d]).pid);
 		}
 	};
 	xhr.onerror = function() {
