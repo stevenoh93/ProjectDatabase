@@ -1,5 +1,4 @@
 // Jquery with no conflict
-// var mysql = require('mysql');
 
 jQuery(document).ready(function($) {
 	
@@ -143,63 +142,8 @@ jQuery(document).ready(function($) {
 		$.scrollTo( '#letter-'+ n, 300 ); 
 	});
 	
-	// Update content to latest listings
+});	
 	
-	$("#Item1").html(' \
-		<a href="project.html" class="thumb" title="An image"><img src="img/dummies/300x200.gif" alt="Post" /></a> \
-							<div class="excerpt"> \
-								<a href="project.html" class="header">Lorem ipsum dolor</a> \
-								<a href="project.html" class="text">CHANGE</a> \
-								<div class="meta">Admin on 23 Jun, 2010</div> \
-							</div> \
-	');
-	
-	var data = makeCORSRequest('GET','http://72.76.204.54:8888/init')
-	// Load initial data to page
-	var ids = $(".blocks-thumbs").map(function() {return this.id;}).toArray();
-	
-});
-	
-// Make AJAX request
-function makeCORSRequest(method, url) {
-	var xhr = createCORSRequest(method, url);
-	if (!xhr) {
-		alert('CORS not supported');
-		return;
-	}
-	xhr.onload = function() {
-		var text = xhr.responseText.split(";");
-		// for(var d in text) {
-		// 	console.log(JSON.parse(text[d]).pid);
-		// }
-		return text;
-	};
-	xhr.onerror = function() {
-		alert('Woops, there was an error making the request.');
-	};
-
-	xhr.send();
-}
-
-
-function createCORSRequest(method, url) {
-	var xhr = new XMLHttpRequest();
-	if ("withCredentials" in xhr) {
-		// Check if the XMLHttpRequest object has a "withCredentials" property.
-		// "withCredentials" only exists on XMLHTTPRequest2 objects.
-		xhr.open(method, url, true);
-	} else if (typeof XDomainRequest != "undefined") {
-		// Otherwise, check if XDomainRequest.
-		// XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-		xhr = new XDomainRequest();
-		xhr.open(method, url);
-	} else {
-		// Otherwise, CORS is not supported by the browser.
-		xhr = null;
-	}
-	
-	return xhr;
-}
 	
 // search clearance	
 

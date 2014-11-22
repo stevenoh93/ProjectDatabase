@@ -38,7 +38,7 @@ function start(route) {
 			switch(pathname) {
 				case "/init": //Load projects in sorted order by likes
 					console.log("Routed to init");
-					var query = "SELECT * FROM ece464.projects P ORDER BY likes DESC LIMIT 18";
+					var query = "SELECT * FROM ece464.projects P ORDER BY likes DESC LIMIT 6";
 					mysql.makeQuery(query, function(rows) {
 						// Wrap JSON
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
