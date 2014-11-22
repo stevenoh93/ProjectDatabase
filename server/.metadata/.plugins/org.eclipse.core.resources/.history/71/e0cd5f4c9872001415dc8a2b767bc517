@@ -131,24 +131,24 @@ public class RelationMaker {
 			s.executeUpdate("INSERT INTO participation SELECT S.sid, P.pid FROM students S, projects P ORDER BY RAND() LIMIT " + MAX_STUDENTS_PER_PROJ*projCount + ";");
 			
 			/* supervisor, under table */
-//			rs = s.executeQuery("SELECT pid FROM projects");
-//			while(rs.next()) {
-//				proj.add(rs.getString("pid"));
-//			}
-//			rs = s.executeQuery("SELECT fid FROM faculty");
-//			while(rs.next()) {
-//				fac.add(rs.getString("fid"));
-//				facCount++;
-//			}
-//			rs = s.executeQuery("SELECT cid FROM courses");
-//			while(rs.next()) {
-//				course.add(rs.getString("cid"));
-//				courseCount++;
-//			}
-//			for(String p : proj) {
-//				s.executeUpdate("INSERT INTO supervisor(fid, pid) VALUES(" + fac.get(rnd.nextInt(facCount)) + ", " + p + ");");
-//				s.executeUpdate("INSERT INTO under(cid, pid) VALUES(" + course.get(rnd.nextInt(courseCount)) + ", " + p + ");");
-//			}
+			rs = s.executeQuery("SELECT pid FROM projects");
+			while(rs.next()) {
+				proj.add(rs.getString("pid"));
+			}
+			rs = s.executeQuery("SELECT fid FROM faculty");
+			while(rs.next()) {
+				fac.add(rs.getString("fid"));
+				facCount++;
+			}
+			rs = s.executeQuery("SELECT cid FROM courses");
+			while(rs.next()) {
+				course.add(rs.getString("cid"));
+				courseCount++;
+			}
+			for(String p : proj) {
+				s.executeUpdate("INSERT INTO supervisor(fid, pid) VALUES(" + fac.get(rnd.nextInt(facCount)) + ", " + p + ");");
+				s.executeUpdate("INSERT INTO under(cid, pid) VALUES(" + course.get(rnd.nextInt(courseCount)) + ", " + p + ");");
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,6 +1,6 @@
 // Update content to latest listings
 jQuery(document).ready(function($) {
-	var data = makeCORSRequest('GET','http://72.76.204.54:8888/init', function(data) {
+	makeCORSRequest('GET','http://72.76.204.54:8888/init', function(data) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
@@ -9,7 +9,6 @@ jQuery(document).ready(function($) {
 			for(var i=0; i<6; i++) {
 				var curItem = ids[i];
 				var curData = JSON.parse(data[i]);
-				console.log(curData);
 				curItem.innerHTML = ' \
 					<a href="project.html?pid=' + curData.pid.toString() + '" class="thumb" title="An image"><img src="' + curData.coverPhotoPath +'" alt="img not found" width="300" height="200"/></a> \
 									<div class="excerpt"> \
@@ -17,7 +16,6 @@ jQuery(document).ready(function($) {
 										<a href="project.html" class="text">'+ curData.projectDesc +'</a> \
 									</div> \
 				';
-				
 			}
 		}
 	});
@@ -38,7 +36,7 @@ function makeCORSRequest(method, url, cb) {
 		cb(text);
 	};
 	xhr.onerror = function() {
-		alert('Woops, there was an error making the request.');
+		alert('Woops, there was an error making the request to the server.');
 	};
 
 	xhr.send();

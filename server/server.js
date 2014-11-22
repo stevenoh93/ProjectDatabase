@@ -55,10 +55,37 @@ function start(route) {
 					names.push(params[i].split("=")[0]);
 					values.push(params[i].split("=")[1]);
 				}
-				console.log("NAMES : ");
-				console.log(names);
-				console.log("VALUES : ");
-				console.log(values);
+				query = "SELECT * FROM ece464.projects WHERE ";
+				for(var i=0; i<names.length-1; i++)
+					query += names[i] + "='" + values[i] +"', ";
+				query += names[i] + "='" + values[i] +"';";
+				mysql.makeQuery(query, function(rows) {
+					// Wrap JSON
+					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+					for(var i in rows) {
+						response.write(JSON.stringify(rows[i]) + ";;;");
+					}
+					response.end();
+				});
+			}
+			else if(pathname.indexOf("/stu") == 0) {
+				var params = pathname.split("/");
+				var names = [];
+				var values = [];
+				for(var i=2; i<params.length; i++) {
+					names.push(params[i].split("=")[0]);
+					values.push(params[i].split("=")[1]);
+				}
+				query = "SELECT * FROM ece464.students WHERE sid IN ( " +
+							"SELECT sid FROM ece464.participation WHERE pid=" + values[0] + ");"
+				mysql.makeQuery(query, function(rows) {
+					// Wrap JSON
+					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+					for(var i in rows) {
+						response.write(JSON.stringify(rows[i]) + ";;;");
+					}
+					response.end();
+				});		
 			}
 		}
 	}).listen(8888);

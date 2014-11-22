@@ -1,23 +1,32 @@
 jQuery(document).ready(function($) {
 	var pid = getURLParam('pid');
-	var data = makeCORSRequest('GET','http://72.76.204.54:8888/proj/pid=' + pid, function(data) {
+	makeCORSRequest('GET','http://72.76.204.54:8888/proj/pid=' + pid, function(data) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
-			// Load initial data to page
-			var ids = $(".blocks-thumbs li");
-			for(var i=0; i<6; i++) {
-				var curItem = ids[i];
-				var curData = JSON.parse(data[i]);
-				curItem.innerHTML = ' \
-					<a href="project.html" class="thumb" title="An image"><img src="' + curData.coverPhotoPath +'" alt="img not found" width="300" height="200"/></a> \
-									<div class="excerpt"> \
-										<a href="project.html" class="header">'+ curData.pname +'</a> \
-										<a href="project.html" class="text">'+ curData.projectDesc +'</a> \
-									</div> \
-				';
-				
-			}
+			makeCORSRequest('GET','http://72.76.204.54:8888/stu/pid=' + pid, function(stuInfo) {
+				if(stuInfo == 'err')
+					alert('Something went wrong');
+				else {
+					// Load img and description
+					var curData = JSON.parse(data[0]);
+					$("div.img-holder").html('<img src="' + curData.coverPhotoPath + '" alt="Image" class="attachment-post-thumbnail" width=620 height=350 />');
+					$("h3.p-title").html(curData.pname);
+					$("p").html(curData.projectDesc);
+					//Get stu info
+					var stus = "";
+					for(var i=0; i<stuInfo.length-2; i++) {
+						var curD = JSON.parse(stuInfo[i]);
+						stus += curD.firstName + " " + curD.lastName + ", ";
+					}
+					curD = JSON.parse(stuInfo[i]);
+					stus += curD.firstName + " " + curD.lastName;
+					// Load sidebar
+					$("td.first-detail").html(stus);
+					$("td.second-detail").html(curData.term.toString());
+					$("td.third-detail").html('<a href="' + curData.docPath + '">' + curData.docPath+'</a>');
+				}
+			});
 		}
 	});
 });
@@ -33,14 +42,14 @@ function makeCORSRequest(method, url, cb) {
 		cb('err');
 	}
 	xhr.onload = function() {
-		var text = xhr.responseText.split(";");
+		var text = xhr.responseText.split(";;;");
 		// for(var d in text) {
 		// 	console.log(JSON.parse(text[d]).pid);
 		// }
 		cb(text);
 	};
 	xhr.onerror = function() {
-		alert('Woops, there was an error making the request.');
+		alert('Woops, there was an error making the request to the server.');
 	};
 
 	xhr.send();
