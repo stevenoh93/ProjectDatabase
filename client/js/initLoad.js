@@ -9,9 +9,9 @@ jQuery(document).ready(function($) {
 			for(var i=0; i<6; i++) {
 				var curItem = ids[i];
 				var curData = JSON.parse(data[i]);
-				console.log(curData.pid.toString());
+				console.log(curData);
 				curItem.innerHTML = ' \
-					<a href="project.html?pid="' + curData.pid.toString() + 'class="thumb" title="An image"><img src="' + curData.coverPhotoPath +'" alt="img not found" width="300" height="200"/></a> \
+					<a href="project.html?pid=' + curData.pid.toString() + '" class="thumb" title="An image"><img src="' + curData.coverPhotoPath +'" alt="img not found" width="300" height="200"/></a> \
 									<div class="excerpt"> \
 										<a href="project.html" class="header">'+ curData.pname +'</a> \
 										<a href="project.html" class="text">'+ curData.projectDesc +'</a> \
@@ -31,7 +31,7 @@ function makeCORSRequest(method, url, cb) {
 		cb('err');
 	}
 	xhr.onload = function() {
-		var text = xhr.responseText.split(";");
+		var text = xhr.responseText.split(";;;");
 		// for(var d in text) {
 		// 	console.log(JSON.parse(text[d]).pid);
 		// }

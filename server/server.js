@@ -35,19 +35,30 @@ function start(route) {
 		} else {
 			var pathname = url.parse(request.url).pathname;
 			console.log("Request for " + pathname + " received");
-			switch(pathname) {
-				case "/init": //Load projects in sorted order by likes
-					console.log("Routed to init");
-					var query = "SELECT * FROM ece464.projects P ORDER BY likes DESC LIMIT 6";
-					mysql.makeQuery(query, function(rows) {
-						// Wrap JSON
-						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-						for(var i in rows) {
-							response.write(JSON.stringify(rows[i]) + ";");
-						}
-						response.end();
-					});
-				break;
+			if(pathname == "/init") {//Load projects in sorted order by likes
+				console.log("Routed to init");
+				var query = "SELECT pid, coverPhotoPath, pname,projectDesc FROM ece464.projects P ORDER BY likes DESC LIMIT 6";
+				mysql.makeQuery(query, function(rows) {
+					// Wrap JSON
+					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+					for(var i in rows) {
+						response.write(JSON.stringify(rows[i]) + ";;;");
+					}
+					response.end();
+				});
+			}
+			else if(pathname.indexOf("/proj") == 0) {
+				var params = pathname.split("/");
+				var names = [];
+				var values = [];
+				for(var i=2; i<params.length; i++) {
+					names.push(params[i].split("=")[0]);
+					values.push(params[i].split("=")[1]);
+				}
+				console.log("NAMES : ");
+				console.log(names);
+				console.log("VALUES : ");
+				console.log(values);
 			}
 		}
 	}).listen(8888);

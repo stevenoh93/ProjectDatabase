@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
-	var data = makeCORSRequest('GET','http://72.76.204.54:8888/proj', function(data) {
+	var pid = getURLParam('pid');
+	var data = makeCORSRequest('GET','http://72.76.204.54:8888/proj/pid=' + pid, function(data) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
@@ -20,7 +21,10 @@ jQuery(document).ready(function($) {
 		}
 	});
 });
-
+function getURLParam(name) {
+    var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+    return results[1] || 0;
+}
 // Make AJAX request
 function makeCORSRequest(method, url, cb) {
 	var xhr = createCORSRequest(method, url);
