@@ -45,6 +45,7 @@ function start(route) {
 						response.write(JSON.stringify(rows[i]) + ";;;");
 					}
 					response.end();
+					mysql.end();
 				});
 			}
 			else if(pathname.indexOf("/proj") == 0) {
@@ -66,6 +67,7 @@ function start(route) {
 						response.write(JSON.stringify(rows[i]) + ";;;");
 					}
 					response.end();
+					mysql.end();
 				});
 			}
 			else if(pathname.indexOf("/stu") == 0) {
@@ -85,6 +87,7 @@ function start(route) {
 						response.write(JSON.stringify(rows[i]) + ";;;");
 					}
 					response.end();
+					mysql.end();
 				});		
 			}
 		}

@@ -1,9 +1,0 @@
-package server;
-
-import org.jabsorb.JSONRPCServlet;
-import org.jabsorb.client.*;
-
-
-public class JsonProjects extends JSONRPCServlet{
-	@Override protected JSONObject execute(JSONRequest request) throws JSONServletException, JSONException { String id = request.getArgument("id"); if(id != null) { Bank b = BanksRepository.instance() .getBank(Integer.parseInt(id)); if(b != null) { JSONObject bank = new JSONObject(); BankAccount chkAc = b.getCheckingAc(); JSONObject checking = new JSONObject(); checking.put("number", chkAc.getNumber()); checking.put("balance", chkAc.getBalance()); checking.put("openedOn", chkAc.getOpenedOn()); bank.put("checking", checking); return bank; } } - See more at: http://www.devx.com/Java/Article/42399#sthash.csCfCARb.dpuf
-}
