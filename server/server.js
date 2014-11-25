@@ -45,8 +45,8 @@ function start(route) {
 						response.write(JSON.stringify(rows[i]) + ";;;");
 					}
 					response.end();
-					mysql.end();
 				});
+				//mysql.end();
 			}
 			else if(pathname.indexOf("/proj") == 0) {
 				var params = pathname.split("/");
@@ -67,8 +67,8 @@ function start(route) {
 						response.write(JSON.stringify(rows[i]) + ";;;");
 					}
 					response.end();
-					mysql.end();
 				});
+				// mysql.end();
 			}
 			else if(pathname.indexOf("/stu") == 0) {
 				var params = pathname.split("/");
@@ -87,8 +87,8 @@ function start(route) {
 						response.write(JSON.stringify(rows[i]) + ";;;");
 					}
 					response.end();
-					mysql.end();
 				});		
+				//mysql.end();
 			}
 		}
 	}).listen(8888);
