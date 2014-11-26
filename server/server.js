@@ -2,7 +2,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var path = require('path');
-var mysql = require('./mysqlTool.js');
+var mysql = require('mysql');
 
 function start(route) {
 	http.createServer(function(request, response) {
@@ -18,6 +18,11 @@ function start(route) {
 			".gif": "image/gif",
 			".png": "image/png"
 		}
+		var connection = mysql.createConnection({
+			host : 'localhost',
+			user : 'root',
+			password : 'skdml!Tjqjdlek'
+		});
 		var isValidExt = validExtensions[ext];
 		if (isValidExt) {
 			localPath += filename;
@@ -38,15 +43,18 @@ function start(route) {
 			if(pathname == "/init") {//Load projects in sorted order by likes
 				console.log("Routed to init");
 				var query = "SELECT pid, coverPhotoPath, pname,projectDesc FROM ece464.projects P ORDER BY likes DESC LIMIT 6";
-				mysql.makeQuery(query, function(rows) {
+				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
-					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-					for(var i in rows) {
-						response.write(JSON.stringify(rows[i]) + ";;;");
+					if(err)
+						console.log("Err with query");
+					else {
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						for(var i in rows) {
+							response.write(JSON.stringify(rows[i]) + ";;;");
+						}
+						response.end();
 					}
-					response.end();
 				});
-				//mysql.end();
 			}
 			else if(pathname.indexOf("/proj") == 0) {
 				var params = pathname.split("/");
@@ -60,13 +68,17 @@ function start(route) {
 				for(var i=0; i<names.length-1; i++)
 					query += names[i] + "='" + values[i] +"', ";
 				query += names[i] + "='" + values[i] +"';";
-				mysql.makeQuery(query, function(rows) {
+				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
-					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-					for(var i in rows) {
-						response.write(JSON.stringify(rows[i]) + ";;;");
+					if(err)
+						console.log("Err with query");
+					else {
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						for(var i in rows) {
+							response.write(JSON.stringify(rows[i]) + ";;;");
+						}
+						response.end();
 					}
-					response.end();
 				});
 				// mysql.end();
 			}
@@ -80,17 +92,31 @@ function start(route) {
 				}
 				query = "SELECT * FROM ece464.students WHERE sid IN ( " +
 							"SELECT sid FROM ece464.participation WHERE pid=" + values[0] + ");"
-				mysql.makeQuery(query, function(rows) {
+				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
-					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-					for(var i in rows) {
-						response.write(JSON.stringify(rows[i]) + ";;;");
+					if(err)
+						console.log("Err with query");
+					else {
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						for(var i in rows) {
+							response.write(JSON.stringify(rows[i]) + ";;;");
+						}
+						response.end();
 					}
-					response.end();
 				});		
 				//mysql.end();
 			}
 		}
+
+		connection.on('close', function(err) {
+			if(err) {
+				// Connection lost by error. Reconnect
+				connection = mysql.createConnection(connection.config);
+				console.log('Connection closed unexpectedly. Reconnected.')
+			} else {
+				console.log('Connection closed normally');
+			}
+		});
 	}).listen(8888);
 	console.log("Server has started");
 }
