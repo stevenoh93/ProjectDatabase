@@ -108,8 +108,8 @@ function start(route) {
 			}
 		}
 
-		connection.on('close', function(err) {
-			if(err) {
+		connection.on('error', function(err) {
+			if(err.code === 'PROTOCOL_CONNECTION_LOST') {
 				// Connection lost by error. Reconnect
 				connection = mysql.createConnection(connection.config);
 				console.log('Connection closed unexpectedly. Reconnected.')
