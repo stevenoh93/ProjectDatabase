@@ -17,6 +17,7 @@ function loadProjs(pageNum) {
 				var curItem = ids[i];
 				var curData = JSON.parse(data[i]);
 				var newhref = '"project.html?pid=' + curData.pid.toString() + '"';
+				console.log(curData.coverPhotoPath);
 				curItem.innerHTML = ' \
 					<a href=' + newhref + ' class="thumb" title="An image"><img src="' + curData.coverPhotoPath +'" alt="img not found" width="300" height="200"/></a> \
 									<div class="excerpt"> \

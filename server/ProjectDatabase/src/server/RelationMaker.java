@@ -1,6 +1,7 @@
 package server;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.*;
@@ -128,7 +129,7 @@ public class RelationMaker {
 			ArrayList<String> course = new ArrayList<String>();
 			Random rnd = new Random();
 			/* particiation table */
-			s.executeUpdate("INSERT INTO participation SELECT S.sid, P.pid FROM students S, projects P ORDER BY RAND() LIMIT " + MAX_STUDENTS_PER_PROJ*projCount + ";");
+			//s.executeUpdate("INSERT INTO participation SELECT S.sid, P.pid FROM students S, projects P ORDER BY RAND() LIMIT " + MAX_STUDENTS_PER_PROJ*projCount + ";");
 			
 			/* supervisor, under table */
 //			rs = s.executeQuery("SELECT pid FROM projects");
@@ -149,8 +150,17 @@ public class RelationMaker {
 //				s.executeUpdate("INSERT INTO supervisor(fid, pid) VALUES(" + fac.get(rnd.nextInt(facCount)) + ", " + p + ");");
 //				s.executeUpdate("INSERT INTO under(cid, pid) VALUES(" + course.get(rnd.nextInt(courseCount)) + ", " + p + ");");
 //			}
-			
-		} catch (SQLException e) {
+			File dir = new File("D:\\Projects\\ProjectDatabase\\client\\img\\dogs\\");
+			File[] pics = dir.listFiles();
+			int i=0;
+			rs = s.executeQuery("SELECT pid FROM projects ORDER BY likes DESC LIMIT 120");
+			System.out.println(pics[i].getName());
+			while(rs.next()) {
+				proj.add(rs.getString("pid"));
+			}
+			for(String p : proj)
+				s.executeUpdate("UPDATE projects SET coverPhotoPath='img/dogs/" + pics[i++].getName() + "' where pid=" + p);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
