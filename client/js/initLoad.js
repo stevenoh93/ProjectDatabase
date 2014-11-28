@@ -1,6 +1,13 @@
 // Update content to latest listings
 jQuery(document).ready(function($) {
-	makeCORSRequest('GET','http://72.76.204.54:8888/init', function(data) {
+	var curP = $('#light-pagination').pagination('getCurrentPage');
+	loadProjs(curP);
+});
+
+function loadProjs(pageNum) {	
+	// Get current page number
+	console.log("Page changed to " + pageNum);
+	makeCORSRequest('GET','http://72.76.204.54:8888/load/pg=' + pageNum, function(data) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
@@ -20,9 +27,9 @@ jQuery(document).ready(function($) {
 			}
 		}
 	});
-});
+}
 
-// Make AJAX request
+// Make CORS request
 function makeCORSRequest(method, url, cb) {
 	var xhr = createCORSRequest(method, url);
 	if (!xhr) {

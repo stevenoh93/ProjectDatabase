@@ -40,16 +40,18 @@ function start(route) {
 		} else {
 			var pathname = url.parse(request.url).pathname;
 			console.log("Request for " + pathname + " received");
-			if(pathname == "/init") {//Load projects in sorted order by likes
-				console.log("Routed to init");
-				var query = "SELECT pid, coverPhotoPath, pname,projectDesc FROM ece464.projects P ORDER BY likes DESC LIMIT 6";
+			if(pathname.indexOf("/load") == 0) {//Load projects in sorted order by likes
+				var params = pathname.split("/");
+				var pageNum = params[2].split("=")[1];
+				console.log("Send pg " + pageNum);
+				var query = "SELECT pid, coverPhotoPath, pname,projectDesc FROM ece464.projects P ORDER BY likes DESC LIMIT 120";
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
 					if(err)
 						console.log("Err with query");
 					else {
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-						for(var i in rows) {
+						for(var i=(pageNum-1)*6; i<pageNum*6 + 6; i++) {
 							response.write(JSON.stringify(rows[i]) + ";;;");
 						}
 						response.end();
