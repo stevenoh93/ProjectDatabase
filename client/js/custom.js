@@ -176,7 +176,7 @@ function promptPassword(pid) {
 			else {
 				var curData = JSON.parse(data[0]);
 				if(curData.pwd === pwd) {
-					// Go on to edit page
+					// Go on to edit page 
 				}
 			}
 		});
