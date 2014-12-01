@@ -1,10 +1,12 @@
 jQuery(document).ready(function($) {
 	var pid = getURLParam('pid');
-	makeCORSRequest('GET','http://72.76.204.54:8888/proj/pid=' + pid, function(data) {
+	var url = 'http://72.76.204.54';   // Home server
+	// var url = 'http://199.98.16.8';   // School laptop server
+	makeCORSRequest('GET',url+':8888/proj/pid=' + pid, function(data) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
-			makeCORSRequest('GET','http://72.76.204.54:8888/stu/pid=' + pid, function(stuInfo) {
+			makeCORSRequest('GET',url+':8888/stu/pid=' + pid, function(stuInfo) {
 				if(stuInfo == 'err')
 					alert('Something went wrong');
 				else {
