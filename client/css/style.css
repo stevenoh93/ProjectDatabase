@@ -124,14 +124,75 @@ h6.s-title span{
 /* LAYOUT----------------------------------------------------------*/
 
 .content-col{ 
-	float: left; 
-	width: 620px;
+	float: left;
+	width: 500px;
 	margin-left: 10px;
 	margin-bottom: 30px;
 }
 
 .content-col.fullwidth{ 
 	width: 940px;
+}
+
+.content-col.label {
+  color: #648880;
+  cursor: pointer;
+  font-weight: 200;
+}
+
+.content-col.textarea {
+  height: 78px;
+}
+
+.pic{
+                   float: left;
+	width: 500px;
+	margin-left: 10px;
+	margin-bottom: 30px;
+}
+
+.pic label {
+  color: #648880;
+  cursor: pointer;
+  font-weight: 200;
+}
+
+.pdesc{
+                   float: left;
+	width: 500px;
+	margin-left: 10px;
+	margin-bottom: 0px;
+
+}
+
+.pdesc label {
+  color: #648880;
+  cursor: pointer;
+  font-weight: 200;
+}
+
+.pdesc textarea {
+  border: 1px solid #c6c9cc;
+  border-radius: 5px;
+  color: #888;
+  display: block;
+  margin: 5px 0 27px 0;
+  padding: 5px 8px;
+}
+
+.pdesc textarea {
+  height: 200px;
+ width: 400px;
+}
+
+
+.content-col.textarea {
+  border: 1px solid #c6c9cc;
+  border-radius: 5px;
+  color: #888;
+  display: block;
+  margin: 5px 0 15px 0;
+  padding: 5px 8px;
 }
 
 .sidebar{  
@@ -685,6 +746,99 @@ h6.s-title span{
 	background: url(../img/search.png) no-repeat;
 }
 
+
+/*
+  ========================================
+  Buttons
+  ========================================
+
+
+
+/*
+  ========================================
+  Form CSS things
+  ========================================
+*/
+
+form {
+  margin-bottom: 22px;
+}
+input,
+select,
+textarea {
+  font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+.group label {
+  color: #648880;
+  cursor: pointer;
+  font-weight: 200;
+}
+
+
+.group input,
+.group select,
+.group textarea {
+  border: 1px solid #c6c9cc;
+  border-radius: 5px;
+  color: #888;
+  display: block;
+  margin: 5px 0 15px 0;
+  padding: 5px 8px;
+}
+
+
+.group input,
+.group textarea {
+  width: 60%;
+}
+.group select {
+  height: 30px;
+  width: 100px;
+}
+.group textarea {
+  height: 78px;
+}
+
+
+button { 
+  left         : 440px;
+  top          : 360px;
+  padding      : 5px;
+ font: 200 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border       : none;
+  border-radius: 5px;
+  background   : none;
+  cursor       : pointer;
+}
+
+
+button:hover,
+button:focus {
+  outline   : none;
+  background: #000;
+  color   : #FFF;
+}
+
+
+
+.ptag {
+	width: 30px;
+	margin: 5px 0px 5px;
+}
+
+.ptag label {
+  color: #648880;
+  cursor: pointer;
+  font-weight: 200;
+}
+
+.ptag input {
+margin: 5px 0 -17px 100px;
+}
+
+
 /* SOCIAL --------------------------------------------------------*/
 
 .social{
@@ -875,6 +1029,7 @@ h6.s-title span{
 	margin-bottom: 20px;
 	display: block;
 }
+
 
 /* COMMENTS ------------------------------------------------------------*/
 
