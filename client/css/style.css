@@ -42,7 +42,7 @@ body {
 	position: relative;
 }
 
-.wrapper p{
+.wrapper {
 	margin-bottom: 20px;
 }
 
@@ -145,7 +145,7 @@ h6.s-title span{
 }
 
 .pic{
-                   float: left;
+    float: left;
 	width: 500px;
 	margin-left: 10px;
 	margin-bottom: 30px;
@@ -214,6 +214,10 @@ h6.s-title span{
 	display: table;
 	padding: 0px 10px;
 	margin-left: 20px;
+}
+
+.sidebar .attr-name {
+	width: 70px;
 }
 
 /* COLUMNS LAYOUT----------------------------------------------------------*/
