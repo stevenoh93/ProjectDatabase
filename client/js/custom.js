@@ -162,3 +162,14 @@ function changeSkin(skin){
 	document.getElementById('css-skins').href = 'skins/'+skin+'.css';
 }
 
+function selectPage() {
+	var curP = $('#light-pagination').pagination('getCurrentPage');
+	loadProjs(curP);
+}
+
+function promptPassword(pid) {
+	var pwd = prompt('Please enter the password');
+	if(pwd != null) {
+		console.log(pwd + ' for ' + pid);
+	}
+}

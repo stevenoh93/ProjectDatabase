@@ -20,10 +20,11 @@ function loadProjs(pageNum) {
 				console.log(curData.coverPhotoPath);
 				curItem.innerHTML = ' \
 					<a href=' + newhref + ' class="thumb" title="An image"><img src="' + curData.coverPhotoPath +'" alt="img not found" width="300" height="200"/></a> \
-									<div class="excerpt"> \
-										<a href=' + newhref + ' class="header">'+ curData.pname +'</a> \
-										<a href=' + newhref + ' class="text">'+ curData.projectDesc +'</a> \
-									</div> \
+					<div class="excerpt"> \
+						<a href=' + newhref + ' class="header">'+ curData.pname +'</a> \
+						<a href=' + newhref + ' class="text">'+ curData.projectDesc +'</a> \
+					</div> \
+					<input class="button" type="submit" name="submit" onClick=promptPassword('+curData.pid+') value="Edit"> \
 				';
 			}
 		}
