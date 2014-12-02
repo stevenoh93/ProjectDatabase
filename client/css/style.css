@@ -903,6 +903,7 @@ margin: 5px 0 -17px 100px;
 }
 
 .blocks-thumbs li .excerpt{
+	display: block;
 	line-height: 1.5em;
 	margin: 10px 10px 10px 10px;
 }
@@ -922,7 +923,7 @@ margin: 5px 0 -17px 100px;
 	text-decoration: none;
 	color: #7a7e83;
 	display: block;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 }
 
 .blocks-thumbs li .meta{
@@ -934,20 +935,30 @@ margin: 5px 0 -17px 100px;
 	position: absolute;
 	bottom: 5px;
 	right: 5px;
-	 font: 200 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	 font: 150 13px/18px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	  border       : none;
 	  border-radius: 5px;
 	  background   : none;
 	  cursor       : pointer;
 }
+
+.blocks-thumbs li .edit-pwd {
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+	visibility: hidden;
+}
+
+.blocks-thumbs li .pwdBox {
+	width: 140px;
+}
+
 .blocks-thumbs li .button:hover,
 .blocks-thumbs li .button:focus {
 	  outline   : none;
 	  background: #000;
 	  color   : #FFF;
-	}
-
-
+}
 
 
 /* SKILLS --------------------------------------------------------*/

@@ -17,14 +17,17 @@ function loadProjs(pageNum) {
 				var curItem = ids[i];
 				var curData = JSON.parse(data[i]);
 				var newhref = '"project.html?pid=' + curData.pid.toString() + '"';
-				console.log(curData.coverPhotoPath);
 				curItem.innerHTML = ' \
 					<a href=' + newhref + ' class="thumb" title="An image"><img src="' + curData.coverPhotoPath +'" alt="img not found" width="300" height="200"/></a> \
 					<div class="excerpt"> \
 						<a href=' + newhref + ' class="header">'+ curData.pname +'</a> \
 						<a href=' + newhref + ' class="text">'+ curData.projectDesc +'</a> \
 					</div> \
-					<input class="button" type="submit" name="submit" onClick=promptPassword('+curData.pid+') value="Edit"> \
+					<div class="edit-pwd" id="edit-pwd'+ i +'">\
+						<label>Password: </label> \
+						<input id="pwd'+ i +'" type="password" class="pwdBox" /> \
+					</div> \
+					<input id="pwdButton'+ i +'" class="button" type="submit" name="submit" onClick=promptPassword('+curData.pid+','+ i +') value="Edit"> \
 				';
 			}
 		}

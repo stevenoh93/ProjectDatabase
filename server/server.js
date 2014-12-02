@@ -108,7 +108,7 @@ function start(route) {
 				});		
 				//mysql.end();
 			}
-			else if(pathname.indexOf("/stu") == 0) {  // Check password to edit a project
+			else if(pathname.indexOf("/pwd") == 0) {  // Check password to edit a project
 				var params = pathname.split("/");
 				var names = [];
 				var values = [];
@@ -117,7 +117,7 @@ function start(route) {
 					values.push(params[i].split("=")[1]);
 				}
 				query = "SELECT CAST(AES_Decrypt(pwd,'d5f92dcae90ec87247840df8a76a195aa1cd0f7fe996b1d79eb6f9da2294338a556b46cfd64e0fe3a00b71952e17a72880b01540485924150fbb5448098e6853') AS Char(50)) pwd \
-							 FROM ece464.projects WHERE pid='" + values[0]; + "';";
+							 FROM ece464.projects WHERE pid=" + values[0]; + ";";
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
 					if(err)

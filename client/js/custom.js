@@ -167,19 +167,33 @@ function selectPage() {
 	loadProjs(curP);
 }
 
-function promptPassword(pid) {
-	var pwd = prompt('Please enter the password');
-	if(pwd != null) {
-		makeCORSRequest('GET','http://72.76.204.54:8888/pwd/pid=' + pid, function(data) {
-			if(data == 'err')
-				alert('Something went wrong');
-			else {
-				var curData = JSON.parse(data[0]);
-				if(curData.pwd === pwd) {
-					// Go on to edit page 
+function promptPassword(pid, i) {
+	var curState = document.getElementById('pwdButton'+i).value;
+	if(curState === 'Edit') {
+		document.getElementById('edit-pwd'+i).style.visibility = 'visible';
+		document.getElementById('pwdButton'+i).value = 'Submit';
+	}
+	else {
+		document.getElementById('edit-pwd'+i).style.visibility = 'hidden';
+		document.getElementById('pwdButton'+i).value = 'Edit';
+		var pwd = document.getElementById('pwd'+i).value;
+		document.getElementById('pwd'+i).value="";
+		console.log("pid " + pid);
+		if(pwd != null) {
+			makeCORSRequest('GET','http://72.76.204.54:8888/pwd/pid=' + pid, function(data) {
+				if(data == 'err')
+					alert('Something went wrong');
+				else {
+					var curData = JSON.parse(data[0]);
+					if(curData.pwd === pwd) {
+						// Go on to edit page 
+						console.log(window.location.href);
+					} else {
+						alert("Incorrect Password!");
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 }
 
