@@ -1,3 +1,4 @@
+// Load existing project on project edit, leave blank else
 jQuery(document).ready(function($) {
 	var pid = getURLParam('pid');
 	if(pid==='new'){
@@ -36,12 +37,17 @@ jQuery(document).ready(function($) {
 	}
 });
 
-$("#fileToUpload").change(function(){
-	console.log('here');
-    readURL(this);
-});
+// UPDATE or INSERT
+function submit() {
+	var pid = getURLParam('pid');
+	if(pid==='new'){
 
+	} else {
 
+	}
+}
+
+// Load preview
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

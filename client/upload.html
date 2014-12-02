@@ -166,7 +166,7 @@
 <div class="pic">
 	<label>
 	<Strong>Project Cover Picture</Strong> 
-	<input type="file" name="fileToUpload" id="fileToUpload" />
+	<input type="file" name="fileToUpload" id="fileToUpload" onchange="readURL(this)" />
 	<img id="preview" class='preview' src="img/gray-question-mark.png" alt="No image found" />
 	</label>
 </div>
@@ -243,7 +243,7 @@
 </label>
 
 <div class="button">
-	<button type="submit">Submit</button>
+	<button type="submit" onclick='submit()'>Submit</button>
 	<button type="cancel">Cancel</button>
 </div>
 </fieldset>
