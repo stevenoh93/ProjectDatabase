@@ -188,6 +188,13 @@ function promptPassword(pid, i) {
 					if(curData.pwd === pwd) {
 						// Go on to edit page 
 						console.log(window.location.href);
+						var prevLoc = window.location.href.split("/");
+						var toLoc="";
+						for(var i=0; i<prevLoc.length-1;i++)
+							toLoc+=prevLoc[i]+'/';
+						toLoc+='upload.html?pid=' + pid;
+						window.location.href=toLoc;
+						// console.log(toLoc);
 					} else {
 						alert("Incorrect Password!");
 					}

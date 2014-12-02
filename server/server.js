@@ -131,6 +131,9 @@ function start(route) {
 					}
 				});		
 			}
+			else if(pathname.indexOf("/edit") == 0) {
+				
+			}
 		}
 
 		connection.on('error', function(err) {
