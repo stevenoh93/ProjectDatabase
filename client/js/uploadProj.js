@@ -9,29 +9,36 @@ jQuery(document).ready(function($) {
 			if(data == 'err')
 				alert('Something went wrong');
 			else {
-				// makeCORSRequest('GET',url+':8888/stu/pid=' + pid, function(stuInfo) {
-				// 	if(stuInfo == 'err')
-				// 		alert('Something went wrong');
-				// 	else {
-				// 		// Load img and description
-				// 		var curData = JSON.parse(data[0]);
-				// 		$("div.img-holder").html('<img src="' + curData.coverPhotoPath + '" alt="Image" class="attachment-post-thumbnail" width=620 height=350 />');
-				// 		$("h3.p-title").html(curData.pname);
-				// 		$("p").html(curData.projectDesc);
-				// 		//Get stu info
-				// 		var stus = "";
-				// 		for(var i=0; i<stuInfo.length-2; i++) {
-				// 			var curD = JSON.parse(stuInfo[i]);
-				// 			stus += curD.firstName + " " + curD.lastName + ", ";
-				// 		}
-				// 		curD = JSON.parse(stuInfo[i]);
-				// 		stus += curD.firstName + " " + curD.lastName;
-				// 		// Load sidebar
-				// 		$("td.first-detail").html(stus);
-				// 		$("td.second-detail").html(curData.term.toString());
-				// 		$("td.third-detail").html('<a href="' + curData.docPath + '">' + curData.docPath+'</a>');
-				// 	}
-				// });
+				makeCORSRequest('GET',url+':8888/stu/pid=' + pid, function(stuInfo) {
+					if(stuInfo == 'err')
+						alert('Something went wrong');
+					else {
+						// Load information about the project and contributers
+						var curData = JSON.parse(data[0]);
+						$("div.preview-wrap").html('<img id="preview" class="preview" src="' + curData.coverPhotoPath + '" alt="No image found" />');
+						$("#pname").attr('value',curData.pname);
+						$("#projComments").html(curData.projectDesc);
+						$("#pterm option:selected").val(curData.term);
+						$("#pterm option:selected").text(curData.term);
+						$("#purl").val(curData.docPath);
+						$("#pstatus option:selected").val(curData.status);
+						$("#pstatus option:selected").text(curData.status);
+						var checkBoxes = $(".ptag input").toArray();
+						var curCat = curData.pcategory;
+						for(var i=0; i<checkBoxes.length; i++) 
+							if(curCat.indexOf(checkBoxes[i].value) > -1)
+								$("#"+checkBoxes[i].id).prop('checked',true);
+						//Get stu info
+						var stus = "";
+						for(var i=0; i<stuInfo.length-2; i++) {
+							var curD = JSON.parse(stuInfo[i]);
+							stus += curD.firstName + " " + curD.lastName + "\n";
+						}
+						curD = JSON.parse(stuInfo[i]);
+						stus += curD.firstName + " " + curD.lastName;
+						$("#sid").html(stus);
+					}
+				});
 			}
 		});
 	}

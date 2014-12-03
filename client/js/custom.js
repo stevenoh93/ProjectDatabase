@@ -167,10 +167,13 @@ function selectPage() {
 	loadProjs(curP);
 }
 
+// In upload.html
 function promptPassword(pid, i) {
 	var curState = document.getElementById('pwdButton'+i).value;
 	if(curState === 'Edit') {
 		document.getElementById('edit-pwd'+i).style.visibility = 'visible';
+		document.getElementById('pwd'+i).focus();
+		document.getElementById('pwd'+i).select();
 		document.getElementById('pwdButton'+i).value = 'Submit';
 	}
 	else {

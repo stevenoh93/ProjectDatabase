@@ -832,7 +832,9 @@ button:focus {
   color   : #FFF;
 }
 
-
+#pterm {
+	width: 130px;
+}
 
 .ptag {
 	width: 30px;
