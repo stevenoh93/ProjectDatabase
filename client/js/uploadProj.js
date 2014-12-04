@@ -48,13 +48,14 @@ jQuery(document).ready(function($) {
 // UPDATE or INSERT
 function submitNewProj() {
 	var pid = getURLParam('pid');
+	
 	if(pid==='new'){
 
 	} else {
 
 	}
 	// Redirect to main
-	console.log(window.location.href);
+	alert("Upload processeed.");
 	var prevLoc = window.location.href.split("/");
 	var toLoc="";
 	for(var i=0; i<prevLoc.length-1;i++)
@@ -109,9 +110,6 @@ function makeCORSRequest(method, url, cb) {
 	}
 	xhr.onload = function() {
 		var text = xhr.responseText.split(";;;");
-		// for(var d in text) {
-		// 	console.log(JSON.parse(text[d]).pid);
-		// }
 		cb(text);
 	};
 	xhr.onerror = function() {

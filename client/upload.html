@@ -27,9 +27,10 @@
 		<script src="js/moveForm.js"></script>
 		<script src="js/custom.js"></script>
 		<script src="js/uploadProj.js"></script>
+		<script type="text/javascript" src="js/form-validation.js"></script>		
 		<!--[if IE]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+		<![endif]
 		
 		<!--[if IE 6]>
 			<script type="text/javascript" src="js/DD_belatedPNG.js"></script>
@@ -189,7 +190,7 @@
 
 				   
 				<label for="pby"><Strong>Contributers:</Strong>
-					<textarea id="sid" placeholder="Seperate Names By Enter"></textarea>
+					<textarea id="sid" placeholder="Separate Names By Enter"></textarea>
 				</label>
 
 
@@ -216,7 +217,7 @@
 
 
 				<label for="purl"><Strong>Project URL:</Strong>
-				    <input type="link" placeholder="Link to pdf" id="purl"  />
+				    <input type="link" placeholder="Link to website" id="purl"  />
 				</label>
 
 				<label for="pstatus"><Strong>Status</Strong>
@@ -236,13 +237,13 @@
 					<input type="checkbox" value="Computer Science" id="c6" > Computer Science
 					<input type="checkbox" value="Mechanical" id="c7" > Mechanical  
 				</div>
-
+<!-- 
 				<label for="passw"><Strong>Password:</Strong>
 				        <input type="password"  id="password" />
-				</label>
+				</label> -->
 
 				<div class="button">
-					<button onclick='submitNewProj()'>Submit</button>
+					<button id='submitButton' onclick='submitNewProj()'>Submit</button>
 					<button>Cancel</button>
 					<button id='deleteButton' style='visibility:hidden' onclick="deleteProj()">Delete</button>
 				</div>

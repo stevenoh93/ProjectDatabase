@@ -183,22 +183,26 @@ function promptPassword(pid, i) {
 		document.getElementById('pwd'+i).value="";
 		console.log("pid " + pid);
 		if(pwd != null) {
-			makeCORSRequest('GET','http://72.76.204.54:8888/pwd/pid=' + pid, function(data) {
+			makeCORSRequest('GET','http://72.76.204.54:8888/pwd/pid=' + pid, function(data) {  // Returns a set of passwords
 				if(data == 'err')
 					alert('Something went wrong');
 				else {
-					var curData = JSON.parse(data[0]);
-					if(curData.pwd === pwd) {
-						// Go on to edit page 
-						console.log(window.location.href);
-						var prevLoc = window.location.href.split("/");
-						var toLoc="";
-						for(var i=0; i<prevLoc.length-1;i++)
-							toLoc+=prevLoc[i]+'/';
-						toLoc+='upload.html?pid=' + pid;
-						window.location.href=toLoc;
-						// console.log(toLoc);
-					} else {
+					var correctPwd = false;
+					// Check against passwords of all contributers
+					for(var i=0; i<data.length; i++) {
+						var curData = JSON.parse(data[i]);
+						if(curData.pwd === pwd) {
+							// Go on to edit page 
+							correctPwd=true;
+							var prevLoc = window.location.href.split("/");
+							var toLoc="";
+							for(var i=0; i<prevLoc.length-1;i++)
+								toLoc+=prevLoc[i]+'/';
+							toLoc+='upload.html?pid=' + pid;
+							window.location.href=toLoc;
+						} 
+					} 
+					if(!correctPwd) {
 						alert("Incorrect Password!");
 					}
 				}
@@ -216,9 +220,6 @@ function makeCORSRequest(method, url, cb) {
 	}
 	xhr.onload = function() {
 		var text = xhr.responseText.split(";;;");
-		// for(var d in text) {
-		// 	console.log(JSON.parse(text[d]).pid);
-		// }
 		cb(text);
 	};
 	xhr.onerror = function() {
