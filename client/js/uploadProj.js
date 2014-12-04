@@ -2,7 +2,7 @@
 jQuery(document).ready(function($) {
 	var pid = getURLParam('pid');
 	if(pid==='new'){
-
+		document.getElementById('deleteButton').style.visibility = 'hidden';
 	} else {
 		var url = 'http://72.76.204.54';   // Home server
 		makeCORSRequest('GET',url+':8888/proj/pid=' + pid, function(data) {
@@ -23,6 +23,7 @@ jQuery(document).ready(function($) {
 						$("#purl").val(curData.docPath);
 						$("#pstatus option:selected").val(curData.status);
 						$("#pstatus option:selected").text(curData.status);
+						document.getElementById('deleteButton').style.visibility = 'visible';
 						var checkBoxes = $(".ptag input").toArray();
 						var curCat = curData.pcategory;
 						for(var i=0; i<checkBoxes.length; i++) 
@@ -45,12 +46,37 @@ jQuery(document).ready(function($) {
 });
 
 // UPDATE or INSERT
-function submit() {
+function submitNewProj() {
 	var pid = getURLParam('pid');
 	if(pid==='new'){
 
 	} else {
 
+	}
+	// Redirect to main
+	console.log(window.location.href);
+	var prevLoc = window.location.href.split("/");
+	var toLoc="";
+	for(var i=0; i<prevLoc.length-1;i++)
+		toLoc+=prevLoc[i]+'/';
+	toLoc+='index.html';
+	window.location.href=toLoc;
+}
+
+function deleteProj() {
+	var pid = getURLParam('pid');
+	console.log("Delete " + pid);
+	var surely = confirm("Are you sure you want to delete this project?");
+	console.log(surely);
+	// Redirect to main
+	if(surely) {
+		// TODO: DELETE
+		var prevLoc = window.location.href.split("/");
+		var toLoc="";
+		for(var i=0; i<prevLoc.length-1;i++)
+			toLoc+=prevLoc[i]+'/';
+		toLoc+='index.html';
+		window.location.href=toLoc;
 	}
 }
 

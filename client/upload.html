@@ -180,9 +180,6 @@
 					</label>
 				</div>
 
-
-				<form action="new-projects" method="post">
-
 				<fieldset class="group">
 
 
@@ -245,11 +242,12 @@
 				</label>
 
 				<div class="button">
-					<button type="submit" onclick='submit()'>Submit</button>
-					<button type="cancel">Cancel</button>
+					<button onclick='submitNewProj()'>Submit</button>
+					<button>Cancel</button>
+					<button id='deleteButton' style='visibility:hidden' onclick="deleteProj()">Delete</button>
 				</div>
 				</fieldset>
-				</form>
+			
 
 				<div class="clear"></div>
 			</div>
