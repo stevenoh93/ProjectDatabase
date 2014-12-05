@@ -133,7 +133,21 @@ function start(route) {
 				});		
 			}
 			else if(pathname.indexOf("/getNames") == 0) {
-				
+				var params = pathname.split("/");
+				var name = params[2].split("=")[1].split("_");
+				query = "SELECT email FROM ece464.students WHERE UPPER(firstName)=UPPER('" + name[0] + "') AND UPPER(lastName)=UPPER('" + name[1] + "');";
+				connection.query(query, function(err, rows, fields) {
+					// Wrap JSON
+					if(err)
+						console.log("Err with query");
+					else {
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						for(var i in rows) {
+							response.write(JSON.stringify(rows[i]) + ";;;");
+						}
+						response.end();
+					}
+				});	
 			}
 			else if(pathname.indexOf("/edit") == 0) {
 				
