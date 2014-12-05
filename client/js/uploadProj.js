@@ -4,12 +4,12 @@ jQuery(document).ready(function($) {
 	if(pid==='new'){
 		document.getElementById('deleteButton').style.visibility = 'hidden';
 	} else {
-		var url = 'http://72.76.204.54';   // Home server
-		makeCORSRequest('GET',url+':8888/proj/pid=' + pid, function(data) {
+		var url = 'http://72.76.204.54:8888/';   // Home server
+		makeCORSRequest('GET',url+'proj/pid=' + pid, function(data) {
 			if(data == 'err')
 				alert('Something went wrong');
 			else {
-				makeCORSRequest('GET',url+':8888/stu/pid=' + pid, function(stuInfo) {
+				makeCORSRequest('GET',url+'stu/pid=' + pid, function(stuInfo) {
 					if(stuInfo == 'err')
 						alert('Something went wrong');
 					else {
@@ -48,47 +48,78 @@ jQuery(document).ready(function($) {
 // UPDATE or INSERT
 function submitNewProj() {
 	var pid = getURLParam('pid');
-
-	// Form validation:
-		// Project Description
-		var desc = $("#projComments").html();
-		if(desc == ""){
-			$("#projComments").focus();
-			return false;
-		}
-		// Project Name
-		var name = $("input#pname").val();
-		if(name == ""){
-			$("input#pname").focus();
-			return false;
-		}
-		// Contributers
-		var sid = $("#sid").html();
-		if(comments == "" || comments == "Separate Names By Enter"){
-			$("#sid").focus();
-			return false;
-		}
-		var imgext = $("#fileToUpload").val();
-		imgext = imgext.substring(imgext.length-3,ext.length);
-		if(imgext.toLowerCase() == 'jpg' || imgext.toLowerCase() == 'png') {
-			$("#fileToUpload").focus();
-			alert("This type of file is not supported");
-			return false;
-		}
-
-	if(pid==='new'){
-
-	} else {
-
+	var url = 'http://72.76.204.54:8888/';   // Home server
+	/************** Form validation **************/
+	// Project Description
+	var desc = $("#projComments").html();
+	if(desc == ""){
+		$("#projComments").focus();
+		return false;
 	}
+	// Project Name
+	var name = $("input#pname").val();
+	if(name == ""){
+		$("input#pname").focus();
+		return false;
+	}
+	// Contributers
+	var sid = $("#sid").html();
+	if(sid == "" || sid == "Separate Names By Enter"){
+		$("#sid").focus();
+		return false;
+	}
+	var imgext = $("#fileToUpload").val();
+	imgext = imgext.substring(imgext.length-3,imgext.length);
+	if(!(imgext.toLowerCase() == 'jpg' || imgext.toLowerCase() == 'png' || $("#preview").attr('src').length >0)) {
+		$("#fileToUpload").focus();
+		alert("This type of file is not supported");
+		return false;
+	}
+	/************** END form validation **************/
+
+	/************** Check duplicate contributer name **************/
+	var emails = [];
+	var contributers = $("#sid").html().split("\n");
+	for(var c in contributers) {
+		console.log(contributers[c].replace(" ","_"));
+		makeCORSRequest("GET",url+'getNames/name=' + contributers[c].replace(" ","_"), function(data) {
+			if(data == 'err')
+				alert('Something went wrong');
+			else {
+				if(data.length > 2) {
+					var promptString = "We've found the following users with the name " + contributers[c] + ". Please select one or another email: \n";
+					for(var i; i<data.length-1; i++)
+						promptString += data[i] + "\n";
+					emails.push(prompt(promptString));
+				} else {
+					emails.push(data[0]);
+				}
+			}
+		});
+	}
+	/************** END Check duplicate contributer name **************/
+
+	/************** Convert to JSON **************/
+	/************** End convert to JSON **************/
+
+	// Make request header
+	var reqEnd="";
+	if(pid==='new'){
+		reqEnd = "add/";
+	} else {
+		reqEnd = "edit/";
+	}
+
+	//Make request
+
 	// Redirect to main
-	alert("Upload processeed.");
-	var prevLoc = window.location.href.split("/");
-	var toLoc="";
-	for(var i=0; i<prevLoc.length-1;i++)
-		toLoc+=prevLoc[i]+'/';
-	toLoc+='index.html';
-	window.location.href=toLoc;
+	// alert("Upload processeed.");
+	// var prevLoc = window.location.href.split("/");
+	// var toLoc="";
+	// for(var i=0; i<prevLoc.length-1;i++)
+	// 	toLoc+=prevLoc[i]+'/';
+	// toLoc+='index.html';
+	// window.location.href=toLoc;
 }
 
 function deleteProj() {

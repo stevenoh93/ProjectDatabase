@@ -132,6 +132,9 @@ function start(route) {
 					}
 				});		
 			}
+			else if(pathname.indexOf("/getNames") == 0) {
+				
+			}
 			else if(pathname.indexOf("/edit") == 0) {
 				
 			}
