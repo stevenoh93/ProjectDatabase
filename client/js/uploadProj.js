@@ -48,7 +48,34 @@ jQuery(document).ready(function($) {
 // UPDATE or INSERT
 function submitNewProj() {
 	var pid = getURLParam('pid');
-	
+
+	// Form validation:
+		// Project Description
+		var desc = $("#projComments").html();
+		if(desc == ""){
+			$("#projComments").focus();
+			return false;
+		}
+		// Project Name
+		var name = $("input#pname").val();
+		if(name == ""){
+			$("input#pname").focus();
+			return false;
+		}
+		// Contributers
+		var sid = $("#sid").html();
+		if(comments == "" || comments == "Separate Names By Enter"){
+			$("#sid").focus();
+			return false;
+		}
+		var imgext = $("#fileToUpload").val();
+		imgext = imgext.substring(imgext.length-3,ext.length);
+		if(imgext.toLowerCase() == 'jpg' || imgext.toLowerCase() == 'png') {
+			$("#fileToUpload").focus();
+			alert("This type of file is not supported");
+			return false;
+		}
+
 	if(pid==='new'){
 
 	} else {
