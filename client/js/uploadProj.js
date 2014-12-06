@@ -49,6 +49,13 @@ jQuery(document).ready(function($) {
 function submitNewProj() {
 	var pid = getURLParam('pid');
 	var url = 'http://72.76.204.54:8888/';   // Home server
+	var reader = new FileReader();
+	var image = document.getElementById("fileToUpload");
+	var imgURL;
+	reader.onload = function (e) {
+        imgURL = e.target.result;
+    }
+    reader.readAsDataURL(image.files[0]);
 	/************** Form validation **************/
 	// Project Description
 	var desc = $("#projComments").html();
@@ -81,7 +88,6 @@ function submitNewProj() {
 	var emails = [];
 	var contributers = $("#sid").html().split("\n");
 	for(var c in contributers) {
-		console.log(contributers[c].replace(" ","_"));
 		makeCORSRequest("GET",url+'getNames/name=' + contributers[c].replace(" ","_"), function(data) {
 			if(data == 'err')
 				alert('Something went wrong');
@@ -95,20 +101,49 @@ function submitNewProj() {
 					emails.push(data[0]);
 				}
 			}
+			// Make request type
+			var reqEnd="";
+			if(pid==='new'){
+				reqEnd = "add/";
+			} else {
+				reqEnd = "edit/";
+			}
+			var xhr = createCORSRequest("POST",url + reqEnd);
+			xhr.onreadystatechange=function() {
+				if (xhr.readyState==4 && xhr.status==200) {
+		    		console.log(xhr.responseText);
+		    	}
+			}
+			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+	/******************** Convert to JSON **********************/
+			var checkBoxes = $(".ptag input").toArray();
+			var cats = "";
+			for(var i=0; i<checkBoxes.length; i++) 
+				if($("#"+checkBoxes[i].id).prop('checked'))
+					cats += checkBoxes[i].value + ".";
+			var content = {
+				pid : pid,
+				coverPhotoPath : imgURL,
+				projectDesc : $("#projComments").html(),
+				pname : $("#pname").attr('value'),
+				term : $("#pterm option:selected").val(),
+				docPath : $("#purl").val(),
+				status : $("#pstatus option:selected").val(),
+				pcategory : cats
+			};
+	/******************** END Convert to JSON **********************/
+			xhr.send(JSON.stringify(content));
 		});
 	}
 	/************** END Check duplicate contributer name **************/
 
-	/************** Convert to JSON **************/
-	/************** End convert to JSON **************/
 
-	// Make request header
-	var reqEnd="";
-	if(pid==='new'){
-		reqEnd = "add/";
-	} else {
-		reqEnd = "edit/";
-	}
+
+
+	
+
+
 
 	//Make request
 

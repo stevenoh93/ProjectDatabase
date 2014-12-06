@@ -150,7 +150,18 @@ function start(route) {
 				});	
 			}
 			else if(pathname.indexOf("/edit") == 0) {
-				
+				var content;
+				console.log(request.method);
+				request.on('data', function(chunk) {
+					console.log(chunk.toString());
+					content = chunk;
+				});
+				request.on('end', function() {
+					console.log("Request done");
+					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+					response.write(JSON.stringify(content.toString()) + ";;;");
+					response.end();
+				});
 			}
 			else if(pathname.indexOf("/add") == 0) {
 			}
