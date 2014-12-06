@@ -116,13 +116,16 @@ function start(route) {
 					names.push(params[i].split("=")[0]);
 					values.push(params[i].split("=")[1]);
 				}
-				query = "SELECT CAST(AES_Decrypt(pwd,'d5f92dcae90ec87247840df8a76a195aa1cd0f7fe996b1d79eb6f9da2294338a556b46cfd64e0fe3a00b71952e17a72880b01540485924150fbb5448098e6853') AS Char(50)) pwd \
+				query = "SELECT CAST(AES_Decrypt(pwd,SHA2('masterkey',512)) AS Char(50)) pwd \
 							 FROM ece464.students WHERE sid IN ( \
-							 	SELECT sid FROM ece464.participation WHERE pid=" + values[0]; + ");";
+							 	SELECT sid FROM ece464.participation WHERE pid=" + values[0] + ");";
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
-					if(err)
-						console.log("Err with query");
+					if(err) {
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						response.write("Wrong password");
+						response.end();
+					}
 					else {
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 						for(var i in rows) {
@@ -150,17 +153,48 @@ function start(route) {
 				});	
 			}
 			else if(pathname.indexOf("/edit") == 0) {
-				var content;
-				console.log(request.method);
+				var cs = [];
 				request.on('data', function(chunk) {
-					console.log(chunk.toString());
-					content = chunk;
+					cs.push(chunk);
 				});
 				request.on('end', function() {
 					console.log("Request done");
-					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-					response.write(JSON.stringify(content.toString()) + ";;;");
-					response.end();
+					var content = ""
+					for(var ch in cs)
+						content += cs[ch].toString();
+					var aContents = JSON.parse(content);
+					var keys = Object.keys(aContents);
+					query = "UPDATE ece464.projects SET ";
+					var curKey;
+					for(var k=0; k<keys.length-1; k++) {
+						curKey = keys[k];
+						if(curKey != "pid" && curKey != "participants")
+							query += curKey + "='" + aContents[curKey] + "', ";
+					}
+					curKey = keys[k];
+					query += curKey + "='" + aContents[curKey] + "' WHERE pid=" + aContents["pid"] + ";";
+					// query = "UPDATE ece464.projects SET \
+					// 						coverPhotoPath = :coverPhotoPath, \
+					// 						projectDesc = :projectDesc, \
+					// 						pname = :pname, \
+					// 						term = :term, \
+					// 						docPath = :docPath, \
+					// 						status = :status, \
+					// 						pcategory = :pcategory WHERE pid = :pid ;"
+					connection.query(query, function (err, result) {
+						if(err) {
+							console.log(result);
+							console.log(err);
+							response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+							response.write("fail");
+							response.end();
+						} else {
+							console.log(result);
+							response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+							response.write("success");
+							response.end();
+						}
+					});
 				});
 			}
 			else if(pathname.indexOf("/add") == 0) {

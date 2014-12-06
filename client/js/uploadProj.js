@@ -55,7 +55,10 @@ function submitNewProj() {
 	reader.onload = function (e) {
         imgURL = e.target.result;
     }
-    reader.readAsDataURL(image.files[0]);
+    if(image.files && image.files[0])
+    	reader.readAsDataURL(image.files[0]);
+    else
+    	imgURL = $("#preview").attr('src');
 	/************** Form validation **************/
 	// Project Description
 	var desc = $("#projComments").html();
@@ -97,64 +100,62 @@ function submitNewProj() {
 					for(var i; i<data.length-1; i++)
 						promptString += data[i] + "\n";
 					emails.push(prompt(promptString));
+				} else 
+					emails.push(JSON.parse(data[0]).email);
+			}
+			if(emails.length == contributers.length) { // Went through all the contributers
+				// Make request type
+				var reqEnd="";
+				if(pid==='new'){
+					reqEnd = "add/";
 				} else {
-					emails.push(data[0]);
+					reqEnd = "edit/";
 				}
-			}
-			// Make request type
-			var reqEnd="";
-			if(pid==='new'){
-				reqEnd = "add/";
-			} else {
-				reqEnd = "edit/";
-			}
-			var xhr = createCORSRequest("POST",url + reqEnd);
-			xhr.onreadystatechange=function() {
-				if (xhr.readyState==4 && xhr.status==200) {
-		    		console.log(xhr.responseText);
-		    	}
-			}
-			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				var xhr = createCORSRequest("POST",url + reqEnd);
+				xhr.onreadystatechange=function() {
+					if (xhr.readyState==4 && xhr.status==200) {
+			    		if(xhr.responseText == "success") {
+			    			//Redirect to main
+							alert("Upload processeed.");
+							var prevLoc = window.location.href.split("/");
+							var toLoc="";
+							for(var i=0; i<prevLoc.length-1;i++)
+								toLoc+=prevLoc[i]+'/';
+							toLoc+='index.html';
+							window.location.href=toLoc;
+			    		} else {
+			    			alert("There was a problem connecting to the database. Please try again later.");
+			    		}
+			    	}
+				}
+				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 
-	/******************** Convert to JSON **********************/
-			var checkBoxes = $(".ptag input").toArray();
-			var cats = "";
-			for(var i=0; i<checkBoxes.length; i++) 
-				if($("#"+checkBoxes[i].id).prop('checked'))
-					cats += checkBoxes[i].value + ".";
-			var content = {
-				pid : pid,
-				coverPhotoPath : imgURL,
-				projectDesc : $("#projComments").html(),
-				pname : $("#pname").attr('value'),
-				term : $("#pterm option:selected").val(),
-				docPath : $("#purl").val(),
-				status : $("#pstatus option:selected").val(),
-				pcategory : cats
-			};
-	/******************** END Convert to JSON **********************/
-			xhr.send(JSON.stringify(content));
+				/******************** Convert to JSON **********************/
+				var checkBoxes = $(".ptag input").toArray();
+				var cats = "";
+				for(var i=0; i<checkBoxes.length; i++) 
+					if($("#"+checkBoxes[i].id).prop('checked'))
+						cats += checkBoxes[i].value + ",";
+				var parts = "";
+				for(var e in emails)
+					parts += emails[e] + ",";
+				var content = {
+					pid : pid,
+					participants : parts,
+					coverPhotoPath : imgURL,
+					projectDesc : $("#projComments").html(),
+					pname : $("#pname").attr('value'),
+					term : $("#pterm option:selected").val(),
+					docPath : $("#purl").val(),
+					status : $("#pstatus option:selected").val(),
+					pcategory : cats
+				};
+				xhr.send(JSON.stringify(content));
+				/******************** END Convert to JSON **********************/
+			}
 		});
 	}
 	/************** END Check duplicate contributer name **************/
-
-
-
-
-	
-
-
-
-	//Make request
-
-	// Redirect to main
-	// alert("Upload processeed.");
-	// var prevLoc = window.location.href.split("/");
-	// var toLoc="";
-	// for(var i=0; i<prevLoc.length-1;i++)
-	// 	toLoc+=prevLoc[i]+'/';
-	// toLoc+='index.html';
-	// window.location.href=toLoc;
 }
 
 function deleteProj() {
