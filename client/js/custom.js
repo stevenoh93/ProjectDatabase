@@ -181,7 +181,6 @@ function promptPassword(pid, i) {
 		document.getElementById('pwdButton'+i).value = 'Edit';
 		var pwd = document.getElementById('pwd'+i).value;
 		document.getElementById('pwd'+i).value="";
-		console.log("pid " + pid);
 		if(pwd != null) {
 			makeCORSRequest('GET','http://72.76.204.54:8888/pwd/pid=' + pid, function(data) {  // Returns a set of passwords
 				if(data == 'err')

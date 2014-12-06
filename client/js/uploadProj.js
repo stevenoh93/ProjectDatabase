@@ -48,6 +48,7 @@ jQuery(document).ready(function($) {
 // UPDATE or INSERT
 function submitNewProj() {
 	var pid = getURLParam('pid');
+	console.log(pid);
 	var url = 'http://72.76.204.54:8888/';   // Home server
 	var reader = new FileReader();
 	var image = document.getElementById("fileToUpload");
@@ -61,21 +62,24 @@ function submitNewProj() {
     	imgURL = $("#preview").attr('src');
 	/************** Form validation **************/
 	// Project Description
-	var desc = $("#projComments").html();
+	var desc = $("#projComments").val();
 	if(desc == ""){
 		$("#projComments").focus();
+		alert("You must have project description.");
 		return false;
 	}
 	// Project Name
 	var name = $("input#pname").val();
 	if(name == ""){
 		$("input#pname").focus();
+		alert("You must have a project name.");
 		return false;
 	}
 	// Contributers
-	var sid = $("#sid").html();
+	var sid = $("#sid").val();
 	if(sid == "" || sid == "Separate Names By Enter"){
 		$("#sid").focus();
+		alert("You must have at least one contributer");
 		return false;
 	}
 	var imgext = $("#fileToUpload").val();
@@ -90,7 +94,6 @@ function submitNewProj() {
 	/************** Check duplicate contributer name **************/
 	var emails = [];
 	var contributers = document.getElementById("sid").value.split("\n");
-	console.log("contributers: " + contributers);
 	for(var c in contributers) {
 		makeCORSRequest("GET",url+'getNames/name=' + contributers[c].replace(" ","_"), function(data) {
 			if(data == 'err')
@@ -130,7 +133,6 @@ function submitNewProj() {
 			    	}
 				}
 				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-
 				/******************** Convert to JSON **********************/
 				var checkBoxes = $(".ptag input").toArray();
 				var cats = "";
@@ -144,8 +146,8 @@ function submitNewProj() {
 					pid : pid,
 					participants : parts,
 					coverPhotoPath : imgURL,
-					projectDesc : $("#projComments").html(),
-					pname : $("#pname").attr('value'),
+					projectDesc : $("#projComments").val(),
+					pname : $("#pname").val(),
 					term : $("#pterm option:selected").val(),
 					docPath : $("#purl").val(),
 					status : $("#pstatus option:selected").val(),

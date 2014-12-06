@@ -239,9 +239,44 @@ function start(route) {
 					for(var k=0; k<keys.length-1; k++) {
 						curKey = keys[k];
 						if(curKey != "pid" && curKey != "participants") {
-							query += curKey + "='" + aContents[curKey] + "', ";
+							query1 += curKey + ", ";
+							query2 += "'" + aContents[curKey] + "', ";
 						}
 					}
+					query = query1 + keys[k] + ") " + query2 +"'"+aContents[keys[k]] + "');";
+					console.log(query);
+					connection.query(query, function (err, result) {
+						if(err) {
+							console.log(err);
+							response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+							response.write("fail");
+							response.end();
+						} else {
+							/* Update participation table */
+							aContents["pid"] = result.insertId;
+							var emails = aContents["participants"].split(",");
+							query = "";
+							var count=0;
+							for(var e=0; e<emails.length-1;e++) {
+								query = "INSERT INTO ece464.participation(pid, sid) VALUES(" + aContents["pid"] + ",(SELECT sid FROM ece464.students WHERE email='" + emails[e] + "'));\n" 
+								connection.query(query, function (err2, result2) {
+									count++;
+									if(err2) {
+										console.log(err2);
+										response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+										response.write("fail");
+										response.end();
+									} else {
+										if(count == emails.length-1) {
+											response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+											response.write("success");
+											response.end();
+										}
+									}
+								});
+							}
+						}
+					});
 				});
 			}
 		}
