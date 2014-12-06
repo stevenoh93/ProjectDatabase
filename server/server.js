@@ -122,6 +122,7 @@ function start(route) {
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
 					if(err) {
+						console.log(err);
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 						response.write("Wrong password");
 						response.end();
@@ -129,6 +130,7 @@ function start(route) {
 					else {
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 						for(var i in rows) {
+							console.log(rows[i]);
 							response.write(JSON.stringify(rows[i]) + ";;;");
 						}
 						response.end();
@@ -164,6 +166,8 @@ function start(route) {
 						content += cs[ch].toString();
 					var aContents = JSON.parse(content);
 					var keys = Object.keys(aContents);
+
+					/* Update row in projects */
 					query = "UPDATE ece464.projects SET ";
 					var curKey;
 					for(var k=0; k<keys.length-1; k++) {
@@ -173,31 +177,72 @@ function start(route) {
 					}
 					curKey = keys[k];
 					query += curKey + "='" + aContents[curKey] + "' WHERE pid=" + aContents["pid"] + ";";
-					// query = "UPDATE ece464.projects SET \
-					// 						coverPhotoPath = :coverPhotoPath, \
-					// 						projectDesc = :projectDesc, \
-					// 						pname = :pname, \
-					// 						term = :term, \
-					// 						docPath = :docPath, \
-					// 						status = :status, \
-					// 						pcategory = :pcategory WHERE pid = :pid ;"
 					connection.query(query, function (err, result) {
 						if(err) {
-							console.log(result);
 							console.log(err);
 							response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 							response.write("fail");
 							response.end();
 						} else {
-							console.log(result);
-							response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-							response.write("success");
-							response.end();
+							/* Update participation table */
+							// Delete all previous participations in this project
+							connection.query("DELETE FROM ece464.participation WHERE pid=" + aContents["pid"], function (err, result) {
+								if(err) {
+									console.log(err);
+									response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+									response.write("fail");
+									response.end();
+								} else {
+									// Add new participations
+									var emails = aContents["participants"].split(",");
+									query = "";
+									var count=0;
+									for(var e=0; e<emails.length-1;e++) {
+										query = "INSERT INTO ece464.participation(pid, sid) VALUES(" + aContents["pid"] + ",(SELECT sid FROM ece464.students WHERE email='" + emails[e] + "'));\n" 
+										connection.query(query, function (err2, result2) {
+											count++;
+											if(err2) {
+												console.log(err2);
+												response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+												response.write("fail");
+												response.end();
+											} else {
+												if(count == emails.length-1) {
+													response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+													response.write("success");
+													response.end();
+												}
+											}
+										});
+									}
+								}
+							});
 						}
 					});
 				});
 			}
 			else if(pathname.indexOf("/add") == 0) {
+				var cs = [];
+				request.on('data', function(chunk) {
+					cs.push(chunk);
+				});
+				request.on('end', function() {
+					console.log("Request done");
+					var content = ""
+					for(var ch in cs)
+						content += cs[ch].toString();
+					var aContents = JSON.parse(content);
+					var keys = Object.keys(aContents);
+					var query1 = "INSERT INTO ece464.projects("
+					var query2 = "VALUES ("
+					var curKey;
+					for(var k=0; k<keys.length-1; k++) {
+						curKey = keys[k];
+						if(curKey != "pid" && curKey != "participants") {
+							query += curKey + "='" + aContents[curKey] + "', ";
+						}
+					}
+				});
 			}
 		}
 

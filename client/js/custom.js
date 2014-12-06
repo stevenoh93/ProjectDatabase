@@ -189,7 +189,8 @@ function promptPassword(pid, i) {
 				else {
 					var correctPwd = false;
 					// Check against passwords of all contributers
-					for(var i=0; i<data.length; i++) {
+					for(var i=0; i<data.length-1; i++) {
+						console.log(data[i]);
 						var curData = JSON.parse(data[i]);
 						if(curData.pwd === pwd) {
 							// Go on to edit page 

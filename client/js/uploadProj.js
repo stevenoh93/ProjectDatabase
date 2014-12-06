@@ -89,7 +89,8 @@ function submitNewProj() {
 
 	/************** Check duplicate contributer name **************/
 	var emails = [];
-	var contributers = $("#sid").html().split("\n");
+	var contributers = document.getElementById("sid").value.split("\n");
+	console.log("contributers: " + contributers);
 	for(var c in contributers) {
 		makeCORSRequest("GET",url+'getNames/name=' + contributers[c].replace(" ","_"), function(data) {
 			if(data == 'err')
