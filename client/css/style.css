@@ -786,9 +786,11 @@ textarea {
   font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+
 #loginButton {
+	display: inline;
 	margin-top : 10px;
-	width : 100px;
+	width : 80px;
 	left         : 440px;
 	top          : 360px;
 	padding      : 5px;
@@ -797,6 +799,7 @@ textarea {
 	border-radius: 5px;
 	background   : none;
 	cursor       : pointer;
+	text-align: center;
 }
 #loginButton:hover,
 #loginButton:focus {

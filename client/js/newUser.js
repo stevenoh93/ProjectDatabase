@@ -1,29 +1,37 @@
 $(function() {
 	$('.myform').submit( function() {
-		var xhr = createCORSRequest("GET",'http://72.76.204.54:8888/login/email='+$("#email").val()+"/pwd="+$('#pwd').val())
-		if (!xhr) {
-			alert('CORS not supported');
-			return false;
+		var xhr = createCORSRequest("POST",'http://72.76.204.54:8888/newAccount');
+		xhr.onreadystatechange=function() {
+			if (xhr.readyState==4 && xhr.status==200) {
+	    		if(xhr.responseText == "success") {
+	    			//Redirect to login
+					var prevLoc = window.location.href.split("/");
+					var toLoc="";
+					for(var i=0; i<prevLoc.length-1;i++)
+						toLoc+=prevLoc[i]+'/';
+					toLoc+='login.html';
+					window.location.href=toLoc;
+	    		} else {
+	    			alert("There was a problem connecting to the database. Please try again later.");
+	    		}
+	    	}
 		}
-		xhr.onload = function() {
-			if(xhr.responseText != "success") {
-				alert('Incorrect credentials');
-				return false;
-			} else {
-				var prevLoc = window.location.href.split("/");
-				var toLoc="";
-				for(var i=0; i<prevLoc.length-1;i++)
-					toLoc+=prevLoc[i]+'/';
-				toLoc+='upload.html?pid=' + 'new';
-				window.location.href=toLoc;
-			}
-		};
 		xhr.onerror = function() {
 			alert('Woops, there was an error making the request to the server.');
 			return false;
 		};
-
-		xhr.send();
+		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		/******************** Convert to JSON **********************/
+		var content = {
+			firstName : $('#fname').val(),
+			lastName : $('#lname').val(),
+			email : $('#email').val(),
+			pwd : $('#pwd').val(),
+			gradYear : $("#year option:selected").val(),
+			dname : $('#major option:selected').val()
+		};
+		xhr.send(JSON.stringify(content));
+		/******************** END Convert to JSON **********************/
 	});
 });
 
@@ -32,6 +40,7 @@ function createCORSRequest(method, url) {
 	if ("withCredentials" in xhr) {
 		// Check if the XMLHttpRequest object has a "withCredentials" property.
 		// "withCredentials" only exists on XMLHTTPRequest2 objects.
+		xhr.withCredentials = true;
 		xhr.open(method, url, true);
 	} else if (typeof XDomainRequest != "undefined") {
 		// Otherwise, check if XDomainRequest.

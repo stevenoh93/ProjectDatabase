@@ -61,33 +61,87 @@ function start(route) {
 				});
 			}
 			else if(pathname.indexOf("/login") == 0) {
-				var params = pathname.split("/");
-				var names = [];
-				var values = [];
-				for(var i=2; i<params.length; i++) {
-					names.push(params[i].split("=")[0]);
-					values.push(params[i].split("=")[1]);
-				}
-				query = "SELECT sid FROM ece464.students WHERE email='" + values[0] + "' AND CAST(AES_Decrypt(pwd,SHA2('masterkey',512)) AS Char(50)) = '" + values[1] + "';";
-				connection.query(query,function(err, rows, fields) {
-					if(err) {
-						console.log(err);
-						response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-						response.write("fail");
-						response.end();
-					}
-					else {
-						response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-						if(rows.length > 0 ) 
-							response.write("success");
-						else
+				var cs = [];
+				request.on('data', function(chunk) {
+					cs.push(chunk);
+				});
+				request.on('end', function() {
+					var content = ""
+					for(var ch in cs)
+						content += cs[ch].toString();
+					var aContents = JSON.parse(content);
+					query = "SELECT sid FROM ece464.students WHERE email='" + aContents['email'] + "' AND CAST(AES_Decrypt(pwd,SHA2('masterkey',512)) AS Char(50)) = '" + aContents['pwd'] + "';";
+					connection.query(query,function(err, rows, fields) {
+						if(err) {
+							console.log(err);
+							response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 							response.write("fail");
-						response.end();
-					}
-				})
+							response.end();
+						}
+						else {
+							response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+							if(rows.length > 0 ) 
+								response.write("success");
+							else
+								response.write("fail");
+							response.end();
+						}
+					});
+				});
 			}
 			else if(pathname.indexOf("/newAccount") == 0) {
-				
+				var cs = [];
+				request.on('data', function(chunk) {
+					cs.push(chunk);
+				});
+				request.on('end', function() {
+					var content = ""
+					for(var ch in cs)
+						content += cs[ch].toString();
+					var aContents = JSON.parse(content);
+					// Check if user already exists
+					connection.query("SELECT * FROM ece464.students WHERE email='"+aContents['email']+"';", function(err, rows, fields) {
+						if(err) {
+							console.log(err2);
+							response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+							response.write("fail");
+							response.end();
+						} else {
+							if(rows || rows.length == 0) {
+								// This email is new
+								var keys = Object.keys(aContents);
+								var query1 = "INSERT INTO ece464.students("
+								var query2 = "VALUES ("
+								var curKey;
+								for(var k=0; k<keys.length-1; k++) {
+									curKey = keys[k];
+									if(curKey != 'pwd') {
+										query1 += curKey + ", ";
+										query2 += "'" + aContents[curKey] + "', ";
+									}
+								}
+								query = query1 + keys[k] + ", pwd) " + query2 +"'"+aContents[keys[k]] + "', AES_ENCRYPT('" + aContents['pwd'] +"',SHA2('masterkey',512)));";
+								connection.query(query, function (err2, result2) {
+									if(err2) {
+										console.log(err2);
+										response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+										response.write("fail");
+										response.end();
+									} else {
+										response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+										response.write("success");
+										response.end();
+									}
+								});
+							} else {
+								response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+								response.write("duplicate");
+								response.end();
+							}
+						}
+					});
+				});
+
 			}
 			else if(pathname.indexOf("/proj") == 0) {  // Loading a project.html with project info
 				var params = pathname.split("/");
@@ -277,7 +331,6 @@ function start(route) {
 						}
 					}
 					query = query1 + keys[k] + ") " + query2 +"'"+aContents[keys[k]] + "');";
-					console.log(query);
 					connection.query(query, function (err, result) {
 						if(err) {
 							console.log(err);

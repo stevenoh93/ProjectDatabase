@@ -136,6 +136,10 @@ function submitNewProj() {
 			    		}
 			    	}
 				}
+				xhr.onerror = function() {
+					alert('Woops, there was an error making the request to the server.');
+					return false;
+				};
 				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 				/******************** Convert to JSON **********************/
 				var checkBoxes = $(".ptag input").toArray();
