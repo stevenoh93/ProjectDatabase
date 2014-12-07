@@ -203,7 +203,7 @@ function promptPassword(pid, i) {
 						} 
 					} 
 					if(!correctPwd) {
-						alert("Incorrect Password!");
+						alert("Incorrect Password! Please enter a password matching one of the contributers.");
 					}
 				}
 			});

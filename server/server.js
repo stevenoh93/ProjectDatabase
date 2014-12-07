@@ -60,6 +60,35 @@ function start(route) {
 					}
 				});
 			}
+			else if(pathname.indexOf("/login") == 0) {
+				var params = pathname.split("/");
+				var names = [];
+				var values = [];
+				for(var i=2; i<params.length; i++) {
+					names.push(params[i].split("=")[0]);
+					values.push(params[i].split("=")[1]);
+				}
+				query = "SELECT sid FROM ece464.students WHERE email='" + values[0] + "' AND CAST(AES_Decrypt(pwd,SHA2('masterkey',512)) AS Char(50)) = '" + values[1] + "';";
+				connection.query(query,function(err, rows, fields) {
+					if(err) {
+						console.log(err);
+						response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						response.write("fail");
+						response.end();
+					}
+					else {
+						response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						if(rows.length > 0 ) 
+							response.write("success");
+						else
+							response.write("fail");
+						response.end();
+					}
+				})
+			}
+			else if(pathname.indexOf("/newAccount") == 0) {
+				
+			}
 			else if(pathname.indexOf("/proj") == 0) {  // Loading a project.html with project info
 				var params = pathname.split("/");
 				var names = [];

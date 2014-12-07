@@ -764,8 +764,21 @@ h6.s-title span{
   ========================================
 */
 
+section#loginBox {
+		background-color: #fff;
+   		border: 1px solid rgba(0,0,0,.15);
+		border-radius: 4px;
+		box-shadow: 0 1px 0 rgba(255,255,255,0.2) inset, 0 0 4px rgba(0,0,0,0.2);
+		margin: -40px 100px 0 -100px;
+		padding: 24px;
+		width: 500px;
+	}
+
 form {
-  margin-bottom: 22px;
+	margin-bottom: 70px;
+	margin-top: 70px;
+	margin-left: 300px;
+	margin-right: 0px;
 }
 input,
 select,
@@ -773,6 +786,24 @@ textarea {
   font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+#loginButton {
+	margin-top : 10px;
+	width : 100px;
+	left         : 440px;
+	top          : 360px;
+	padding      : 5px;
+	font: 200 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	border       : none;
+	border-radius: 5px;
+	background   : none;
+	cursor       : pointer;
+}
+#loginButton:hover,
+#loginButton:focus {
+  outline   : none;
+  background: #000;
+  color   : #FFF;
+}
 
 .group label {
   color: #648880;
@@ -855,6 +886,67 @@ margin: 5px 0 -17px 100px;
 	width: 460px;
 	height: 250px;
 	margin-top: 10px;
+}
+
+/* STUDENTS --------------------------------------------------------*/
+
+.stu label {
+  color: #648880;
+  cursor: pointer;
+  font-weight: 200;
+}
+
+
+.stu input,
+.stu select,
+.stu textarea {
+  border: 1px solid #c6c9cc;
+  border-radius: 5px;
+  color: #888;
+  display: block;
+  margin: 5px 0 15px 0;
+  padding: 5px 8px;
+}
+
+
+.stu input,
+.group textarea {
+  width: 50%;
+}
+.stu select {
+  height: 30px;
+  width: 100px;
+}
+.stu textarea {
+  height: 78px;
+}
+
+.rproj {
+  list-style: circle;
+  margin: 0 0 0px 30px;
+}
+/*
+  ========================================
+  Grid
+  ========================================
+*/
+.pinfo{
+ margin-left: 600px;
+margin-bottom: 200px;
+margin-top: -206px;
+}
+
+h4 {
+  color: #648880;
+}
+
+.pinfo  {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.pinfo {
+  width: 60%;
 }
 
 

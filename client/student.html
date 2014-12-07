@@ -19,14 +19,13 @@
 		
 		<!-- JS -->
 		<script src="js/jquery-1.11.1.min.js"></script>
-		<script src="js/jquery-ui.js"></script>		
+		<script src="js/jquery-ui.js"></script>
 		<!--<script src="js/jquery-ui-1.8.13.custom.min.js"></script>-->
 		<script src="js/easing.js"></script>
 		<script src="js/jquery.scrollTo-1.4.2-min.js"></script>
 		<script src="js/slides.min.jquery.js"></script>
 		<script src="js/moveForm.js"></script>
 		<script src="js/custom.js"></script>
-		<script src="js/uploadProj.js"></script>
 		<!--[if IE]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -69,8 +68,9 @@
 		<!-- ENDS pagination -->
 	</head>
 	
+	
+	
 	<body>
-
 		<!-- HEADER -->
 		<div id="header">
 			<!-- wrapper-header -->
@@ -101,14 +101,14 @@
 				<!-- Navigation -->
 				<ul id="nav" class="sf-menu">
 					<li><a href="index.html">Projects</a></li>
-					<li><a href="tags.html">Students</a></li>
-					<li class="current-menu-item"><a href="login.html">Upload</a></li>
-					<!-- <li><a href="page.html">Page</a>
+					<li class="current-menu-item"><a href="tags.html">Students</a></li>
+					<li><a href="login.html">Upload</a></li>
+<!-- 					<li><a href="page.html">Page</a>
 						<ul>
 							<li><a href="page.html">Page with sidebar</a></li>
 							<li><a href="page-fullwidth.html">Fullwidth page</a></li>
 						</ul>
-					 --></li>
+					</li> -->
 					<li><a href="index.html">Skins</a>
 						<ul>
 							<li><a href="javascript:changeSkin('')">Original</a></li>
@@ -132,120 +132,60 @@
 		<div id="main">
 			<!-- wrapper-main -->
 			<div class="wrapper">
-			
-				<!-- filter -->
-<!-- 				<ul class="tags">
-					<li><span>Categories</span></li>
-		    		<li><a href="#" > All </a></li>
-		    		<li class="active"><a href="#" > Photography </a></li>
-		    		<li><a href="#" > Logo </a></li>
-		    		<li><a href="#" > Webdesign  </a></li>
-		    		<li><a href="#" > Marketing </a></li>
-		    		<li><a href="#" > Gaming </a></li>
-		    		<li><a href="#" > Coding </a></li>
-		    	</ul> -->
-				<!-- ENDS filter -->
-				
-				<!-- search -->
-<!-- 				<div class="top-search">
-					<form  method="get" id="searchform" action="#">
-						<div>
-							<input type="text" value="Search..." name="s" id="s" onfocus="defaultInput(this,'Search...')" onblur="clearInput(this,'Search...')" />
-							<input type="file" id="searchsubmit" value=" " />
-						</div>
-					</form>
-				</div> -->
-				<!-- ENDS search -->
 
-				<!-- Content -->
-				<!-- <form method='post' action -->
-				<div class="pic">
-					<label>
-					<Strong>Project Cover Picture</Strong> 
-					<input type="file" name="fileToUpload" id="fileToUpload" onchange="readURL(this)" />
-					<div class="preview-wrap">
-						<img id="preview" class='preview' src="img/gray-question-mark.png" alt="No image found" />
-					</div>
-					</label>
-				</div>
+           <!-- Content -->
 
-				<div class="pdesc">
-					<label>
-						<Strong>Project Description:</Strong>
-						<textarea type='text' id="projComments"></textarea>
-					</label>
-				</div>
+<fieldset class="stu">
 
-				<fieldset class="group">
+ <label for="fname"><Strong>First Name :</Strong>
+</label>
+
+<br>
+<br>
+
+<label for="lname"><Strong>Last Name :</Strong>
+</label>
+
+<br>
+<br>
+
+        <label for="year"><Strong>Year:</Strong>
+        
+    </label>
+<br>
+<br>
 
 
-				<label for="pname"><Strong>Project Name:</Strong>
-					<input type="text" id="pname"  >
-				</label>
+<label for="major"><Strong>Major:</Strong>
+    
+    </label>
 
-				   
-				<label for="pby"><Strong>Contributers:</Strong>
-					<textarea id="sid" placeholder="Separate Names By New Line. Don't forget to add your own name!"></textarea>
-				</label>
+<br>
+<br>
 
+ <label for="email"><Strong>Email:</Strong>
+       
+</label>
+<br>
+<br>
+</fieldset>
 
+<!-- Project Details -->
 
+        <section class="pinfo">
+          <h4><Strong>Registered Projects:</Strong> </h4>
 
-				<label for="pterm"><Strong>Term</Strong>
-					<select name="term" id="pterm">
-						<option value="Other" selected>Other</option>
-						<option value="Fall 1995" >Fall 1995</option>
-						<option value="Spring 1995">Spring 1995</option>
-						<option value="Fall 1996">Fall 1996</option><option value="Spring 1996">Spring 1996</option>
-						<option value="Fall 1997">Fall 1997</option><option value="Spring 1997">Spring 1997</option><option value="Fall 1998">Fall 1998</option>
-						<option value="Spring 1998">Spring 1998</option><option value="Fall 1999">Fall 1999</option><option value="Spring 1999">Spring 1999</option><option value="Fall 2000">Fall 2000</option><option value="Spring 2000">Spring 2000</option>
-						<option value="Fall 2001">Fall 2001</option><option value="Spring 2001">Spring 2001</option><option value="Fall 2002">Fall 2002</option><option value="Spring 2002">Spring 2002</option><option value="Fall 2003">Fall 2003</option>
-						<option value="Spring 2003">Spring 2003</option><option value="Fall 2004">Fall 2004</option><option value="Spring 2004">Spring 2004</option><option value="Fall 2005">Fall 2005</option><option value="Spring 2005">Spring 2005</option>
-						<option value="Fall 2006">Fall 2006</option><option value="Spring 2006">Spring 2006</option><option value="Fall 2007">Fall 2007</option><option value="Spring 2007">Spring 2007</option><option value="Fall 2008">Fall 2008</option>
-						<option value="Spring 2008">Spring 2008</option><option value="Fall 2009">Fall 2009</option><option value="Spring 2009">Spring 2009</option><option value="Fall 2010">Fall 2010</option><option value="Spring 2010">Spring 2010</option>
-						<option value="Fall 2011">Fall 2011</option><option value="Spring 2011">Spring 2011</option><option value="Fall 2012">Fall 2012</option><option value="Spring 2012">Spring 2012</option><option value="Fall 2013">Fall 2013</option>
-						<option value="Spring 2013">Spring 2013</option><option value="Fall 2014">Fall 2014</option>
-					</select>
-				</label>
+          <ul class="rproj">
+            <li>P1</li>
+            <li>P2</li>
+            <li>P3</li>
+            <li>P4</li>
+          </ul>
 
+        </section>
 
 
-
-				<label for="purl"><Strong>Project URL:</Strong>
-				    <input type="link" placeholder="Link to website" id="purl"  />
-				</label>
-
-				<label for="pstatus"><Strong>Status</Strong>
-				    <select name="status" id="pstatus">
-						<option value="Active" selected>Active</option>
-						<option value="Done" >Done</option>
-				    </select>
-				</label>
-
-				<div class="ptag">
-					<label for="Project-Tags"> <Strong>Tags:</Strong> </label>
-					<input type="checkbox" value="Electrical" id="c1" > Electrical
-					<input type="checkbox" value="Civil" id="c2" > Civil
-					<input type="checkbox" value="Chemical" id="c3" > Chemical
-					<input type="checkbox" value="Arts" id="c4" > Arts
-					<input type="checkbox" value="Architecture" id="c5" > Architecture
-					<input type="checkbox" value="Computer Science" id="c6" > Computer Science
-					<input type="checkbox" value="Mechanical" id="c7" > Mechanical  
-				</div>
-<!-- 
-				<label for="passw"><Strong>Password:</Strong>
-				        <input type="password"  id="password" />
-				</label> -->
-
-				<div class="button">
-					<button id='submitButton' onclick='submitNewProj()'>Submit</button>
-					<button>Cancel</button>
-					<button id='deleteButton' style='visibility:hidden' onclick="deleteProj()">Delete</button>
-				</div>
-				</fieldset>
-			
-
-				<div class="clear"></div>
+<div class="clear"></div>
 			</div>
 			<!-- ENDS wrapper-main -->
 		</div>
