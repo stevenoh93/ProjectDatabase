@@ -71,7 +71,7 @@
 		<div id="header">
 			<!-- wrapper-header -->
 			<div class="logo1">		
-				<center><a href="index.html"><img id="img" src="img/logo.png" alt="Caja" width=200 height=200 /></a></center>
+				<center><a href="index.html"><img id="img" src="img/logo.png" alt="Caja" width=250 height=250 /></a></center>
 			</div>
 			<!-- ENDS wrapper-header -->
 			<div id="top-torn"></div>	
@@ -84,7 +84,7 @@
 			<div class="wrapper">
 
             <!-- Content -->
-			<form class = 'myform'>
+			<!-- <form class = 'myform'> -->
 				<section id="loginBox">
 				<fieldset class="group">
 					<label for="purl"><Strong>Email:</Strong>
@@ -100,11 +100,12 @@
 					</div>
 
 					<div class="button">
-					    <input id="loginButton" type="submit" value="Log In" />
+					    <input id="loginButton" onclick='submit()' type="button" value="Log In" />
+					    <input id="loginButton" onclick='history.go(-1);return true;' type="button" value="Cancel" />
 					</div>
 				</fieldset>
 				</section>
-			</form>
+			<!-- </form> -->
 			<!-- ENDS content -->
 			<div class="clear"></div>
 			</div>

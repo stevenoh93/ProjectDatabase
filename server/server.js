@@ -158,8 +158,10 @@ function start(route) {
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
 					if(err) {
-						console.log("Err with query");
 						console.log(err);
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						response.write("err");
+						response.end();
 					}
 					else {
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
@@ -173,18 +175,16 @@ function start(route) {
 			}
 			else if(pathname.indexOf("/stu") == 0) {  // Loading a project.html with student info
 				var params = pathname.split("/");
-				var names = [];
-				var values = [];
-				for(var i=2; i<params.length; i++) {
-					names.push(params[i].split("=")[0]);
-					values.push(params[i].split("=")[1]);
-				}
 				query = "SELECT * FROM ece464.students WHERE sid IN ( " +
-							"SELECT sid FROM ece464.participation WHERE pid=" + values[0] + ");"
+							"SELECT sid FROM ece464.participation WHERE pid=" + params[2].split("=")[1] + ");"
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
-					if(err)
-						console.log("Err with query");
+					if(err) {
+						console.log(err);
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						response.write("err");
+						response.end();
+					}
 					else {
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 						for(var i in rows) {
@@ -193,7 +193,26 @@ function start(route) {
 						response.end();
 					}
 				});		
-				//mysql.end();
+			}
+			else if(pathname.indexOf('/stuInfo') == 0) {
+				var params = pathname.split("/");
+				query = "SELECT * FROM ece464.students WHERE sid=" + params[2].split("=")[1]; + ";";
+				connection.query(query, function(err, rows, fields) {
+					// Wrap JSON
+					if(err) {
+						console.log(err);
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						response.write("err");
+						response.end();
+					}
+					else {
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						for(var i in rows) {
+							response.write(JSON.stringify(rows[i]) + ";;;");
+						}
+						response.end();
+					}
+				});		
 			}
 			else if(pathname.indexOf("/pwd") == 0) {  // Check password to edit a project
 				var params = pathname.split("/");

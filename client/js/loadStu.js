@@ -1,41 +1,12 @@
 jQuery(document).ready(function($) {
-	var pid = getURLParam('pid');
+	var sid = getURLParam('sid');
 	var url = 'http://72.76.204.54:8888/';   // Home server
 	// var url = 'http://199.98.16.8';   // School laptop server
-	makeCORSRequest('GET',url+'proj/pid=' + pid, function(data) {
+	makeCORSRequest('GET',url+'stuInfo/sid=' + sid, function(data) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
-			makeCORSRequest('GET',url+'stu/pid=' + pid, function(stuInfo) {
-				if(stuInfo == 'err')
-					alert('Something went wrong');
-				else {
-					// Load img and description
-					var curData = JSON.parse(data[0]);
-					$("div.img-holder").html('<img src="' + curData.coverPhotoPath + '" alt="Image" class="attachment-post-thumbnail" width=620 height=350 />');
-					$("h3.p-title").html(curData.pname);
-					$("p").html(curData.projectDesc);
-					var tags = curData.pcategory.split(",");
-					for(var t in tags) {
-						console.log(tags[t]);
-						if(tags[t] && tags[t].length > 0) {
-							$("#tags ul").append('<li>' + tags[t] + "</li>");
-						}
-					}
-					//Get stu info
-					var stus = "";
-					for(var i=0; i<stuInfo.length-2; i++) {
-						var curD = JSON.parse(stuInfo[i]);
-						stus += curD.firstName + " " + curD.lastName + ", ";
-					}
-					curD = JSON.parse(stuInfo[i]);
-					stus += curD.firstName + " " + curD.lastName;
-					// Load sidebar
-					$("td.first-detail").html(stus);
-					$("td.second-detail").html(curData.term.toString());
-					$("td.third-detail").html('<a href="' + curData.docPath + '">' + curData.docPath+'</a>');
-				}
-			});
+			
 		}
 	});
 });

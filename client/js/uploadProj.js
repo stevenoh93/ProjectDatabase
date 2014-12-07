@@ -140,7 +140,7 @@ function submitNewProj() {
 					alert('Woops, there was an error making the request to the server.');
 					return false;
 				};
-				xhr.setRequestHeader("Content-type","application/JSON");
+				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 				/******************** Convert to JSON **********************/
 				var checkBoxes = $(".ptag input").toArray();
 				var cats = "";

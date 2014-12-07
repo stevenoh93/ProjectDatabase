@@ -158,7 +158,7 @@ h6.s-title span{
 }
 
 .pdesc{
-                   float: left;
+    float: left;
 	width: 500px;
 	margin-left: 10px;
 	margin-bottom: 0px;
@@ -182,9 +182,8 @@ h6.s-title span{
 
 .pdesc textarea {
   height: 200px;
- width: 400px;
+  width: 400px;
 }
-
 
 .content-col.textarea {
   border: 1px solid #c6c9cc;
@@ -769,17 +768,13 @@ section#loginBox {
    		border: 1px solid rgba(0,0,0,.15);
 		border-radius: 4px;
 		box-shadow: 0 1px 0 rgba(255,255,255,0.2) inset, 0 0 4px rgba(0,0,0,0.2);
-		margin: -40px 100px 0 -100px;
+		margin: 5px auto 50px auto;
 		padding: 24px;
 		width: 500px;
-	}
 
-form {
-	margin-bottom: 70px;
-	margin-top: 70px;
-	margin-left: 300px;
-	margin-right: 0px;
 }
+
+
 input,
 select,
 textarea {
@@ -845,7 +840,6 @@ textarea {
 .group textarea {
   height: 78px;
 }
-
 
 button { 
   left         : 440px;
@@ -928,6 +922,11 @@ margin: 5px 0 -17px 100px;
   list-style: circle;
   margin: 0 0 0px 30px;
 }
+
+.contr textarea {
+	height: 200px;
+	width: 270px;
+}
 /*
   ========================================
   Grid
@@ -951,7 +950,6 @@ h4 {
 .pinfo {
   width: 60%;
 }
-
 
 /* SOCIAL --------------------------------------------------------*/
 

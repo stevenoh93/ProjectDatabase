@@ -1,39 +1,75 @@
-$(function() {
-	$('.myform').submit( function() {
-		var xhr = createCORSRequest("POST",'http://72.76.204.54:8888/login');
-		if (!xhr) {
-			alert('CORS not supported');
+// $(function() {
+// 	$('.myform').submit( function() {
+// 		var xhr = createCORSRequest("POST",'http://72.76.204.54:8888/login');
+// 		if (!xhr) {
+// 			alert('CORS not supported');
+// 			return false;
+// 		}
+// 		xhr.onreadystatechange = function() {
+// 			if (xhr.readyState==4 && xhr.status==200) {
+// 	    		if(xhr.responseText == "success") {
+// 					alert('Incorrect credentials');
+// 					return false;
+// 				} else {
+// 					var prevLoc = window.location.href.split("/");
+// 					var toLoc="";
+// 					for(var i=0; i<prevLoc.length-1;i++)
+// 						toLoc+=prevLoc[i]+'/';
+// 					toLoc+='upload.html?pid=' + 'new';
+// 					window.location.href=toLoc;
+// 				}
+// 			} else {
+// 				alert('Could not connect to the database');
+// 			}
+// 		};
+// 		xhr.onerror = function() {
+// 			alert('Woops, there was an error making the request to the server.');
+// 			return false;
+// 		};
+// 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+// 		var content = {
+// 			email : $("#email").val(),
+// 			pwd : $('#pwd').val()
+// 		};
+// 		xhr.send(JSON.stringify(content));
+// 	});
+// });
+
+function submit() {
+	var xhr = createCORSRequest("POST",'http://72.76.204.54:8888/login');
+	if (!xhr) {
+		alert('CORS not supported');
+		return false;
+	}
+	xhr.onload = function() {
+		if (xhr.readyState==4 && xhr.status==200) {
+    		if(xhr.responseText != "success") {
+				alert('Incorrect credentials');
+				return false;
+			} else {
+				var prevLoc = window.location.href.split("/");
+				var toLoc="";
+				for(var i=0; i<prevLoc.length-1;i++)
+					toLoc+=prevLoc[i]+'/';
+				toLoc+='upload.html?pid=' + 'new';
+				window.location.href=toLoc;
+			}
+		} else {
+			alert('Could not connect to the database');
 			return false;
 		}
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState==4 && xhr.status==200) {
-	    		if(xhr.responseText == "success") {
-					alert('Incorrect credentials');
-					return false;
-				} else {
-					var prevLoc = window.location.href.split("/");
-					var toLoc="";
-					for(var i=0; i<prevLoc.length-1;i++)
-						toLoc+=prevLoc[i]+'/';
-					toLoc+='upload.html?pid=' + 'new';
-					window.location.href=toLoc;
-				}
-			} else {
-				alert('Could not connect to the database');
-			}
-		};
-		xhr.onerror = function() {
-			alert('Woops, there was an error making the request to the server.');
-			return false;
-		};
-		xhr.setRequestHeader("Content-type","application/JSON");
-		var content = {
-			email : $("#email").val(),
-			pwd : $('#pwd').val()
-		};
-		xhr.send(JSON.stringify(content));
-	});
-});
+	};
+	xhr.onerror = function() {
+		alert('Woops, there was an error making the request to the server.');
+		return false;
+	};
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	var content = {
+		email : $("#email").val(),
+		pwd : $('#pwd').val()
+	};
+	xhr.send(JSON.stringify(content));
+}
 
 function createCORSRequest(method, url) {
 	var xhr = new XMLHttpRequest();
