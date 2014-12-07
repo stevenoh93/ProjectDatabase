@@ -236,7 +236,6 @@ function start(route) {
 					else {
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 						for(var i in rows) {
-							console.log(rows[i]);
 							response.write(JSON.stringify(rows[i]) + ";;;");
 						}
 						response.end();
@@ -277,13 +276,11 @@ function start(route) {
 					var curKey;
 					for(var k=0; k<keys.length-1; k++) {
 						curKey = keys[k];
-						console.log(aContents[curKey].replace(/\'/ig,"\\\'"));
 						if(curKey != "pid" && curKey != "participants")
 							query += curKey + "='" + aContents[curKey].replace(/\'/ig,"\\\'") + "', ";
 					}
 					curKey = keys[k];
-					query += curKey + "='" + aContents[curKey].replace(/\'/ig,"\\\'") + "' WHERE pid=" + aContents["pid"].replace(/\'/ig,"\\\'") + ";";
-					console.log(query);
+					query += curKey + "='" + aContents[curKey].replace(/\'/ig,"\\\'") + "' WHERE pid=" + aContents["pid"] + ";";
 					connection.query(query, function (err, result) {
 						if(err) {
 							console.log(err);
@@ -293,7 +290,7 @@ function start(route) {
 						} else {
 							/* Update participation table */
 							// Delete all previous participations in this project
-							connection.query("DELETE FROM ece464.participation WHERE pid=" + aContents["pid"].replace(/\'/ig,"\\\'"), function (err, result) {
+							connection.query("DELETE FROM ece464.participation WHERE pid=" + aContents["pid"], function (err, result) {
 								if(err) {
 									console.log(err);
 									response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
@@ -305,7 +302,7 @@ function start(route) {
 									query = "";
 									var count=0;
 									for(var e=0; e<emails.length-1;e++) {
-										query = "INSERT INTO ece464.participation(pid, sid) VALUES(" + aContents["pid"].replace(/\'/ig,"\\\'") + ",(SELECT sid FROM ece464.students WHERE email='" + emails[e].replace(/\'/ig,"\\\'") + "'));\n" 
+										query = "INSERT INTO ece464.participation(pid, sid) VALUES(" + aContents["pid"] + ",(SELECT sid FROM ece464.students WHERE email='" + emails[e].replace(/\'/ig,"\\\'") + "'));\n" 
 										connection.query(query, function (err2, result2) {
 											count++;
 											if(err2) {
@@ -334,7 +331,6 @@ function start(route) {
 					cs.push(chunk);
 				});
 				request.on('end', function() {
-					console.log("Request done");
 					var content = ""
 					for(var ch in cs)
 						content += cs[ch].toString();
@@ -364,7 +360,7 @@ function start(route) {
 							query = "";
 							var count=0;
 							for(var e=0; e<emails.length-1;e++) {
-								query = "INSERT INTO ece464.participation(pid, sid) VALUES(" + aContents["pid"].replace(/\'/ig,"\\\'") + ",(SELECT sid FROM ece464.students WHERE email='" + emails[e].replace(/\'/ig,"\\\'") + "'));\n" 
+								query = "INSERT INTO ece464.participation(pid, sid) VALUES(" + aContents["pid"] + ",(SELECT sid FROM ece464.students WHERE email='" + emails[e].replace(/\'/ig,"\\\'") + "'));\n" 
 								connection.query(query, function (err2, result2) {
 									count++;
 									if(err2) {
