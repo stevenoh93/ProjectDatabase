@@ -104,8 +104,12 @@ function submitNewProj() {
 					for(var i; i<data.length-1; i++)
 						promptString += data[i] + "\n";
 					emails.push(prompt(promptString));
-				} else 
+				} else if (data[0]) {
 					emails.push(JSON.parse(data[0]).email);
+				} else {
+					alert(contributers[c] +" is not a registered user. You cannot add a non-registered user.");
+					return false;
+				}
 			}
 			if(emails.length == contributers.length) { // Went through all the contributers
 				// Make request type
@@ -163,18 +167,24 @@ function submitNewProj() {
 
 function deleteProj() {
 	var pid = getURLParam('pid');
+	var url = 'http://72.76.204.54:8888/';   // Home server		
 	console.log("Delete " + pid);
 	var surely = confirm("Are you sure you want to delete this project?");
-	console.log(surely);
 	// Redirect to main
 	if(surely) {
 		// TODO: DELETE
-		var prevLoc = window.location.href.split("/");
-		var toLoc="";
-		for(var i=0; i<prevLoc.length-1;i++)
-			toLoc+=prevLoc[i]+'/';
-		toLoc+='index.html';
-		window.location.href=toLoc;
+		makeCORSRequest("GET",url+"del/pid=" + pid, function(result) {
+			if(result=='fail') {
+				alert("There was an error connecting to the database");
+			} else {
+				var prevLoc = window.location.href.split("/");
+				var toLoc="";
+				for(var i=0; i<prevLoc.length-1;i++)
+					toLoc+=prevLoc[i]+'/';
+				toLoc+='index.html';
+				window.location.href=toLoc;
+			}
+		});
 	}
 }
 

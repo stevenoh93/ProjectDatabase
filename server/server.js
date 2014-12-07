@@ -44,11 +44,13 @@ function start(route) {
 				var params = pathname.split("/");
 				var pageNum = params[2].split("=")[1];
 				console.log("Send pg " + pageNum);
-				var query = "SELECT pid, coverPhotoPath, pname,projectDesc FROM ece464.projects P ORDER BY likes DESC LIMIT 120";
+				var query = "SELECT pid, coverPhotoPath, pname,projectDesc FROM ece464.projects P ORDER BY pid DESC LIMIT 120";
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
-					if(err)
+					if(err) {
 						console.log("Err with query");
+						console.log(err);
+					}
 					else {
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 						for(var i=(pageNum-1)*6; i<pageNum*6 + 6; i++) {
@@ -72,8 +74,10 @@ function start(route) {
 				query += names[i] + "='" + values[i] +"';";
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
-					if(err)
+					if(err) {
 						console.log("Err with query");
+						console.log(err);
+					}
 					else {
 						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 						for(var i in rows) {
@@ -277,6 +281,31 @@ function start(route) {
 							}
 						}
 					});
+				});
+			}
+			else if(pathname.indexOf("/del") == 0) {
+				var params = pathname.split("/");
+				var pid = params[2].split("=")[1];
+				connection.query("DELETE FROM ece464.projects WHERE pid="+pid+";", function (err, result) {
+					if(err) {
+						console.log(err);
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						response.write("fail");
+						response.end();
+					} else {
+						connection.query("DELETE FROM ece464.participation WHERE pid="+pid+";", function (err2, result2) {
+							if(err2) {
+								console.log(err2);
+								response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+								response.write("fail");
+								response.end();
+							} else {
+								response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+								response.write("success");
+								response.end();
+							}
+						});
+					}
 				});
 			}
 		}

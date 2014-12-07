@@ -448,7 +448,7 @@ h6.s-title span{
 	padding: 3px 0px;
 }
 
-.tags li a{	
+.tags li {	
 	display: block;
 	color: #282d34;
 	text-decoration: none;
@@ -460,14 +460,14 @@ h6.s-title span{
 	-webkit-border-radius: 10px;
 }
 
-.tags li a:hover,
-.tags li.active a{
+.tags li :hover,
+.tags li.active {
 	color: #fff;
 	background: #23282e;	
 }
 
-.tags li:first-child a,
-.tags li:first-child:hover a{
+.tags li:first-child ,
+.tags li:first-child:hover {
 	background: none;
 	line-height: 14px;
 }

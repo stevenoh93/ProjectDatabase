@@ -15,6 +15,13 @@ jQuery(document).ready(function($) {
 					$("div.img-holder").html('<img src="' + curData.coverPhotoPath + '" alt="Image" class="attachment-post-thumbnail" width=620 height=350 />');
 					$("h3.p-title").html(curData.pname);
 					$("p").html(curData.projectDesc);
+					var tags = curData.pcategory.split(",");
+					for(var t in tags) {
+						console.log(tags[t]);
+						if(tags[t] && tags[t].length > 0) {
+							$("#tags ul").append('<li>' + tags[t] + "</li>");
+						}
+					}
 					//Get stu info
 					var stus = "";
 					for(var i=0; i<stuInfo.length-2; i++) {
