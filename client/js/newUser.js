@@ -1,6 +1,7 @@
 $(function() {
 	$('.myform').submit( function() {
-		var xhr = createCORSRequest("POST",'http://72.76.204.54:8888/newAccount');
+		var url="http://72.76.204.54:8888/newAccount"
+		var xhr = createCORSRequest("POST", url);
 		xhr.onreadystatechange=function() {
 			if (xhr.readyState==4 && xhr.status==200) {
 	    		if(xhr.responseText == "success") {
@@ -11,6 +12,8 @@ $(function() {
 						toLoc+=prevLoc[i]+'/';
 					toLoc+='login.html';
 					window.location.href=toLoc;
+	    		} else if(xhr.responseText == "duplicate") {
+	    			alert("This email account already exists");
 	    		} else {
 	    			alert("There was a problem connecting to the database. Please try again later.");
 	    		}
@@ -20,7 +23,6 @@ $(function() {
 			alert('Woops, there was an error making the request to the server.');
 			return false;
 		};
-		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		/******************** Convert to JSON **********************/
 		var content = {
 			firstName : $('#fname').val(),
@@ -30,17 +32,18 @@ $(function() {
 			gradYear : $("#year option:selected").val(),
 			dname : $('#major option:selected').val()
 		};
+		xhr.setRequestHeader('Content-type', "application/JSON");
 		xhr.send(JSON.stringify(content));
 		/******************** END Convert to JSON **********************/
 	});
 });
+
 
 function createCORSRequest(method, url) {
 	var xhr = new XMLHttpRequest();
 	if ("withCredentials" in xhr) {
 		// Check if the XMLHttpRequest object has a "withCredentials" property.
 		// "withCredentials" only exists on XMLHTTPRequest2 objects.
-		xhr.withCredentials = true;
 		xhr.open(method, url, true);
 	} else if (typeof XDomainRequest != "undefined") {
 		// Otherwise, check if XDomainRequest.

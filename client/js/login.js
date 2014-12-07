@@ -26,7 +26,7 @@ $(function() {
 			alert('Woops, there was an error making the request to the server.');
 			return false;
 		};
-		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xhr.setRequestHeader("Content-type","application/JSON");
 		var content = {
 			email : $("#email").val(),
 			pwd : $('#pwd').val()
