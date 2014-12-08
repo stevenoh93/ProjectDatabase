@@ -22,10 +22,11 @@
 		<script src="js/jquery-ui.js"></script>
 		<!--<script src="js/jquery-ui-1.8.13.custom.min.js"></script>-->
 		<script src="js/easing.js"></script>
-		<script src="js/jquery.scrollTo-1.4.2-min.js"></script>
+		<script src="js/scroll/jquery.scrollTo.min.js"></script>
 		<script src="js/slides.min.jquery.js"></script>
 		<script src="js/moveForm.js"></script>
 		<script src="js/custom.js"></script>
+		<script src="js/loadStuList.js"></script>
 		<!--[if IE]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -133,7 +134,6 @@
 		<div id="main">
 			<!-- wrapper-main -->
 			<div class="wrapper">
-			
 				<!-- filter -->
 				<ul id="tags-filter" class="tags">
 					<li><span>Index:</span> </li>
@@ -167,228 +167,146 @@
 				<!-- ENDS filter -->
 				
 				<!-- search -->
-				<div class="top-search">
+<!-- 				<div class="top-search">
 					<form  method="get" id="searchform" action="#">
 						<div>
 							<input type="text" value="Search..." name="s" id="s" onfocus="defaultInput(this,'Search...')" onblur="clearInput(this,'Search...')" />
 							<input type="submit" id="searchsubmit" value=" " />
 						</div>
 					</form>
-				</div>
+				</div> -->
 				<!-- ENDS search -->
 			
 				<!-- Tags -->
-				<div>
-					
+				<div>	
 					<ul id="letter-a" class="tags listing">
 						<li><span>A </span> </li>
 			    		<li><a href="#"> Active (8) </a></li>
-			    		<li><a href="#"> Add (1) </a></li>
-			    		<li><a href="#"> Addressbook (3) </a></li>
-			    		<li><a href="#"> Admit one (1)</a></li>
-			    		<li><a href="#"> Airplane (1) </a></li>
-			    		<li><a href="#"> Apple (20) </a></li>
-			    		<li><a href="#">  Audio (3) </a></li>
-			    		<li><a href="#"> Awesome (2) </a></li>	
 			    		<li><a href="#" class="to-list"> Return to list</a></li>		    		
 			    	</ul>
 
 					<ul id="letter-b" class="tags listing">
 						<li><span>B </span> </li>
-			    		<li><a href="#"> Bullets (1) </a></li>
-			    		<li><a href="#"> Button (8) </a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 					
 					<ul id="letter-c" class="tags listing">
 						<li><span>C </span> </li>
-			    		<li><a href="#"> Carousel (3)</a></li>
-						<li><a href="#"> Cartoon (1)</a></li>
-			    		<li><a href="#"> Cart (1)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-d" class="tags listing">
 						<li><span>D </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-e" class="tags listing">
 						<li><span>E </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-f" class="tags listing">
 						<li><span>F </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-h" class="tags listing">
 						<li><span>H </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-i" class="tags listing">
 						<li><span>I </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-j" class="tags listing">
 						<li><span>J </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-k" class="tags listing">
 						<li><span>K </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-l" class="tags listing">
 						<li><span>L </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-m" class="tags listing">
 						<li><span>M </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-n" class="tags listing">
 						<li><span>N </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-o" class="tags listing">
 						<li><span>O </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    				    	
 			    	<ul id="letter-p" class="tags listing">
 						<li><span>P </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-q" class="tags listing">
 						<li><span>Q </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-r" class="tags listing">
 						<li><span>R </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-s" class="tags listing">
 						<li><span>S </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-t" class="tags listing">
 						<li><span>T </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-u" class="tags listing">
 						<li><span>U </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-g" class="tags listing">
 						<li><span>G </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-v" class="tags listing">
 						<li><span>V </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-w" class="tags listing">
 						<li><span>W </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-x" class="tags listing">
 						<li><span>X </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-y" class="tags listing">
 						<li><span>Y </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 			    	
 			    	<ul id="letter-z" class="tags listing">
 						<li><span>Z </span> </li>
-			    		<li><a href="#"> Lorem  dolor (11)</a></li>
-						<li><a href="#"> Ipsum (2)</a></li>
-			    		<li><a href="#"> Zurco (6)</a></li>
 			    		<li><a href="#" class="to-list"> Return to list</a></li>
 			    	</ul>
 					
@@ -403,20 +321,20 @@
 
 			
 		<!-- FOOTER -->
-		<div id="footer">
+<!-- 		<div id="footer">
 			<!-- wrapper-footer -->
-			<div class="wrapper">
+<!-- 			<div class="wrapper">
 			
 				
 				<!-- title -->
-				<div class="title">
+<!-- 				<div class="title">
 					<span class="big">Hire me!</span> <span class="small"> I am available for freelance</span>
 					<div  class="to-top poshytip" title="To top">to top</div>
 				</div>
 				<!-- Ends title -->
 				
 				<!-- left col -->
-				<div class="footer-left">
+<!-- 				<div class="footer-left">
 					<h6 class="p-title">Some history</h6>
 					<p>Once upon a time pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
 
@@ -436,12 +354,12 @@
 				<!-- ENDS left col -->
 				
 				<!-- right col -->
-				<div class="footer-right">
+<!-- 				<div class="footer-right">
 					<h6 class="p-title">Contact me</h6>
 					<p>Want to hire me or just say hello? Use the form below to get in touch. Dont be shy!</p>
 
 					<!-- form -->
-					<script type="text/javascript" src="js/form-validation.js"></script>
+<!-- 					<script type="text/javascript" src="js/form-validation.js"></script>
 					<form id="contactForm" action="#" method="post">
 						<fieldset>
 							<div>
@@ -455,25 +373,25 @@
 							</div>
 							
 							<!-- send mail configuration -->
-							<input type="hidden" value="luis@luiszuno.com" name="to" id="to" />
+	<!-- 						<input type="hidden" value="luis@luiszuno.com" name="to" id="to" />
 							<input type="hidden" value="youremail@luiszuno.com" name="from" id="from" />
 							<input type="hidden" value="From contact form" name="subject" id="subject" />
 							<input type="hidden" value="send-mail.php" name="sendMailUrl" id="sendMailUrl" />
 							<!-- ENDS send mail configuration -->
 							
-							<p><input type="button" value="Send" name="submit" id="submit" /></p>
+<!-- 							<p><input type="button" value="Send" name="submit" id="submit" /></p>
 						</fieldset>
 					</form>
 					<p id="success" class="success">Thanks for your comments.</p>
 					<!-- ENDS form -->
-				</div>
+<!-- 				</div>
 				<div class="clear"></div>
-				<!-- ENDS right col -->
+				<!-- ENDS right col --> -->
 					
 				
-			</div>
+<!-- 			</div>
 			<!-- ENDS wrapper-footer -->
-		</div>
+<!-- 		</div>
 		<!-- ENDS FOOTER -->
 		
 	
@@ -481,8 +399,8 @@
 		<div id="bottom">
 			<!-- wrapper-bottom -->
 			<div class="wrapper">
-				<div id="bottom-text"><a href="http://luiszuno.com/blog/downloads/caja-template" >Caja Template</a> is a FREE file by <a href="http://www.luiszuno.com"> luiszuno</a> </div>
-				<div  class="to-top poshytip" title="To top">to top</div>
+				<div id="bottom-text">ECE464 Project for Steven Oh and Akshay Joshi</div>
+				<div  class="to-top" title="To top">to top</div>
 			</div>
 			<!-- ENDS wrapper-bottom -->
 		</div>
