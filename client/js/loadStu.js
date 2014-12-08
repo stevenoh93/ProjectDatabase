@@ -5,8 +5,8 @@ jQuery(document).ready(function($) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
-			console.log(data);
-			console.log(sid);
+			var attr = JSON.parse(data[0]);
+			
 		}
 	});
 });
