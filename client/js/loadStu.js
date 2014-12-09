@@ -1,11 +1,11 @@
 jQuery(document).ready(function($) {
 	var sid = getURLParam('sid');
 	var url = 'http://72.76.204.54:8888/';   // Home server
-	// var url = 'http://199.98.16.8';   // School laptop server
 	makeCORSRequest('GET',url+'stuInfo/sid=' + sid, function(data) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
+			var attr = JSON.parse(data[0]);
 			
 		}
 	});

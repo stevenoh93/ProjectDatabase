@@ -135,8 +135,9 @@ jQuery(document).ready(function($) {
 	
 	
 	// Scroll to letter ------------------------------------------------------ //
-    	
+    
 	$('#tags-filter li a').click(function(){ 
+		console.log('clicked');
 		var n = $(this).attr('class');
 		n = n.substr(3);
 		$.scrollTo( '#letter-'+ n, 300 ); 
