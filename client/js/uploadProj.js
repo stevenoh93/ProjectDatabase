@@ -48,7 +48,6 @@ jQuery(document).ready(function($) {
 // UPDATE or INSERT
 function submitNewProj() {
 	var pid = getURLParam('pid');
-	console.log(pid);
 	var url = 'http://72.76.204.54:8888/';   // Home server
 	var reader = new FileReader();
 	var image = document.getElementById("fileToUpload");
@@ -104,8 +103,10 @@ function submitNewProj() {
 					for(var i; i<data.length-1; i++)
 						promptString += data[i] + "\n";
 					emails.push(prompt(promptString));
-				} else if (data[0]) {
-					emails.push(JSON.parse(data[0]).email);
+				} else if (data[0] && data[0].length>=0) {
+					var p = JSON.parse(data[0]).email;
+					if(emails.indexOf(p) < 0) 
+						emails.push(p);
 				} else {
 					alert(contributers[c] +" is not a registered user. You cannot add a non-registered user.");
 					return false;
@@ -172,7 +173,6 @@ function submitNewProj() {
 function deleteProj() {
 	var pid = getURLParam('pid');
 	var url = 'http://72.76.204.54:8888/';   // Home server		
-	console.log("Delete " + pid);
 	var surely = confirm("Are you sure you want to delete this project?");
 	// Redirect to main
 	if(surely) {
