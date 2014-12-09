@@ -173,10 +173,10 @@ function start(route) {
 				});
 				// mysql.end();
 			}
-			else if(pathname.indexOf("/stu") == 0) {  // Loading a project.html with student info
+			else if(pathname.indexOf('/stuInfo') == 0) {
 				var params = pathname.split("/");
-				query = "SELECT * FROM ece464.students WHERE sid IN ( " +
-							"SELECT sid FROM ece464.participation WHERE pid=" + params[2].split("=")[1].replace(/\'/ig,"\\\'") + ");"
+				var sid = params[2].split("=")[1].replace(/\'/ig,"\\\'");
+				query = "SELECT firstName, lastName, gradYear, dname, email FROM ece464.students WHERE sid=" + sid + ";";
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
 					if(err) {
@@ -190,13 +190,27 @@ function start(route) {
 						for(var i in rows) {
 							response.write(JSON.stringify(rows[i]) + ";;;");
 						}
-						response.end();
+						query = "SELECT pid, pname FROM ece464.projects WHERE pid IN (SELECT pid FROM ece464.participation WHERE sid="+sid+");";
+						connection.query(query,function(err2,rows2,fields2) {
+							if(err2) {
+								console.log(err2);
+								response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+								response.write("err");
+								response.end();
+							} else {
+								for(var i in rows2) {
+									response.write(JSON.stringify(rows2[i]) + ";;;");
+								}
+								response.end();
+							}
+						});
 					}
 				});		
 			}
-			else if(pathname.indexOf('/stuInfo') == 0) {
+			else if(pathname.indexOf("/stu") == 0) {  // Loading a project.html with student info
 				var params = pathname.split("/");
-				query = "SELECT * FROM ece464.students WHERE sid=" + params[2].split("=")[1].replace(/\'/ig,"\\\'") + ";";
+				query = "SELECT * FROM ece464.students WHERE sid IN ( " +
+							"SELECT sid FROM ece464.participation WHERE pid=" + params[2].split("=")[1].replace(/\'/ig,"\\\'") + ");"
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
 					if(err) {

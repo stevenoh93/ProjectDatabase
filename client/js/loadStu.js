@@ -5,8 +5,16 @@ jQuery(document).ready(function($) {
 		if(data == 'err')
 			alert('Something went wrong');
 		else {
-			var attr = JSON.parse(data[0]);
-			
+			var stuAttr = JSON.parse(data[0]);
+			$("#fname").html(stuAttr.firstName);
+			$("#lname").html(stuAttr.lastName);
+			$("#year").html(stuAttr.gradYear);
+			$("#major").html(stuAttr.dname);
+			$("#email").html(stuAttr.email);
+			for(var i=1; i<data.length-1; i++) {
+				var curData = JSON.parse(data[i]);
+				$("#projList").append("<li><a href='project.html?pid="+curData.pid+"'>"+curData.pname+"</a></li> <br>");
+			}
 		}
 	});
 });

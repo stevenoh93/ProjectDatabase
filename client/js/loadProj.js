@@ -26,10 +26,10 @@ jQuery(document).ready(function($) {
 					var stus = "";
 					for(var i=0; i<stuInfo.length-2; i++) {
 						var curD = JSON.parse(stuInfo[i]);
-						stus += curD.firstName + " " + curD.lastName + ", ";
+						stus += "<a href='student.html?sid="+curD.sid+"'>" + curD.firstName + " " + curD.lastName + "</a>, ";
 					}
 					curD = JSON.parse(stuInfo[i]);
-					stus += curD.firstName + " " + curD.lastName;
+					stus += "<a href='student.html?sid="+curD.sid+"'>" + curD.firstName + " " + curD.lastName + "</a>";
 					// Load sidebar
 					$("td.first-detail").html(stus);
 					$("td.second-detail").html(curData.term.toString());
