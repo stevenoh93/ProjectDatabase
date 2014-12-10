@@ -59,6 +59,7 @@ function start(route) {
 						response.end();
 					}
 				});
+				connection.end();
 			}
 			else if(pathname.indexOf("/login") == 0) {
 				var cs = [];
@@ -87,6 +88,7 @@ function start(route) {
 							response.end();
 						}
 					});
+					connection.end();
 				});
 			}
 			else if(pathname.indexOf("/newAccount") == 0) {
@@ -107,7 +109,7 @@ function start(route) {
 							response.write("fail");
 							response.end();
 						} else {
-							if(rows || rows.length == 0) {
+							if(!rows || rows.length == 0) {
 								// This email is new
 								var keys = Object.keys(aContents);
 								var query1 = "INSERT INTO ece464.students("
@@ -133,6 +135,7 @@ function start(route) {
 										response.end();
 									}
 								});
+								connection.end();
 							} else {
 								response.writeHead(200, {'Content-Type': 'text', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 								response.write("duplicate");
@@ -171,7 +174,7 @@ function start(route) {
 						response.end();
 					}
 				});
-				// mysql.end();
+				connection.end();
 			}
 			else if(pathname.indexOf('/stuInfo') == 0) {
 				var params = pathname.split("/");
@@ -205,6 +208,7 @@ function start(route) {
 							}
 						});
 					}
+					connection.end();
 				});		
 			}
 			else if(pathname.indexOf("/stu") == 0) {  // Loading a project.html with student info
@@ -226,7 +230,8 @@ function start(route) {
 						}
 						response.end();
 					}
-				});		
+				});	
+				connection.end();	
 			}
 			else if(pathname.indexOf("/pwd") == 0) {  // Check password to edit a project
 				var params = pathname.split("/");
@@ -254,24 +259,34 @@ function start(route) {
 						}
 						response.end();
 					}
-				});		
+				});	
+				connection.end();	
 			}
 			else if(pathname.indexOf("/getNames") == 0) {
 				var params = pathname.split("/");
 				var name = params[2].split("=")[1].split("_");
-				query = "SELECT email FROM ece464.students WHERE UPPER(firstName)=UPPER('" + name[0].replace(/\'/ig,"\\\'") + "') AND UPPER(lastName)=UPPER('" + name[1].replace(/\'/ig,"\\\'") + "');";
+				query = "SELECT email, firstName, lastName FROM ece464.students WHERE UPPER(firstName)=UPPER('" + name[0].replace(/\'/ig,"\\\'") + "') AND UPPER(lastName)=UPPER('" + name[1].replace(/\'/ig,"\\\'") + "');";
 				connection.query(query, function(err, rows, fields) {
 					// Wrap JSON
-					if(err)
+					if(err) {
 						console.log("Err with query");
-					else {
-						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
-						for(var i in rows) {
-							response.write(JSON.stringify(rows[i]) + ";;;");
-						}
+						response.writeHead(201);
 						response.end();
 					}
+					else {
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						if(rows.length == 0) {
+							response.write(JSON.stringify({firstName:name[0], lastName:name[1], email:"err"}));
+							response.end();
+						} else {
+							for(var i in rows) {
+								response.write(JSON.stringify(rows[i]) + ";;;");
+							}
+							response.end();
+						}
+					}
 				});	
+				connection.end();
 			}
 			else if(pathname.indexOf("/edit") == 0) {
 				var cs = [];
@@ -333,6 +348,7 @@ function start(route) {
 											}
 										});
 									}
+									connection.end();
 								}
 							});
 						}
@@ -391,6 +407,7 @@ function start(route) {
 									}
 								});
 							}
+							connection.end();
 						}
 					});
 				});
@@ -417,6 +434,7 @@ function start(route) {
 								response.end();
 							}
 						});
+						connection.end();
 					}
 				});
 			}
@@ -427,6 +445,9 @@ function start(route) {
 				// Connection lost by error. Reconnect
 				connection = mysql.createConnection(connection.config);
 				console.log('Connection closed unexpectedly. Reconnected.')
+			} else if (err) { //Just restart connection
+				connection.end();
+				connection = mysql.createConnection(connection.config);
 			} else {
 				console.log('Connection closed normally');
 			}
@@ -446,6 +467,12 @@ function getFile(localPath, res, mimeType) {
 			res.writeHead(500);
 			res.end();
 		}
+	});
+}
+
+function closeMySQL(connection) {
+	connection.end(function(err) {
+		connection = mysql.createConnection(connection.config);
 	});
 }
 

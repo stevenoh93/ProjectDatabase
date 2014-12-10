@@ -95,79 +95,88 @@ function submitNewProj() {
 	var contributers = document.getElementById("sid").value.split("\n");
 	var count=0;
 	for(var c in contributers) {
-		makeCORSRequest("GET",url+'getNames/name=' + contributers[c].replace(" ","_"), function(data) {
-			if(data == 'err')
-				alert('Something went wrong');
-			else {
-				if(data.length > 2) {
-					var promptString = "We've found the following users with the name " + contributers[c] + ". Please select one or another email: \n";
-					for(var i; i<data.length-1; i++)
-						promptString += data[i] + "\n";
-					emails.push(prompt(promptString));
-				} else if (data[0] && data[0].length>=0) {
-					var p = JSON.parse(data[0]).email;
-					if(emails.indexOf(p) < 0) 
-						emails.push(p);
-					count++;
-				} else {
-					alert(contributers[c] +" is not a registered user. You cannot add a non-registered user.");
-					return false;
+		var curName = contributers[c];
+		if((curName.length < 3) || (curName.indexOf(" ") < 0) || (curName.split(" ").length > 2) ) {
+			alert("Please make sure the following rules are followed: \n \
+	1. Format the names as 'Firstname Lastname' \n \
+	2. One name per line \n \
+	3. No empty lines");
+			return false;
+		} else {
+			makeCORSRequest("GET",url+'getNames/name=' + curName.replace(" ","_"), function(data) {
+				if(data == 'err')
+					alert("There was an error at the database");
+				else {
+					var curUser = JSON.parse(data[0]);
+					if(data.length > 2) {
+						var promptString = "We've found the following users with the name " + curUser.firstName +" " + curUser.lastName + ". Please select one or another email: \n";
+						for(var i; i<data.length-1; i++)
+							promptString += curUser.email + "\n";
+						emails.push(prompt(promptString));
+					} else if (curUser.email == "err") {
+						alert(curUser.firstName + " " + curUser.lastName +" is not a registered user. You cannot add a non-registered user.");
+						return false;
+					} else {
+						if(emails.indexOf(curUser.email) < 0) 
+							emails.push(curUser.email);
+						count++;
+					}
 				}
-			}
-			if(count == contributers.length) { // Went through all the contributers
-				// Make request type
-				var reqEnd="";
-				if(pid==='new'){
-					reqEnd = "add/";
-				} else {
-					reqEnd = "edit/";
+				if(count == contributers.length) { // Went through all the contributers
+					// Make request type
+					var reqEnd="";
+					if(pid==='new'){
+						reqEnd = "add/";
+					} else {
+						reqEnd = "edit/";
+					}
+					var xhr = createCORSRequest("POST",url + reqEnd);
+					xhr.onreadystatechange=function() {
+						if (xhr.readyState==4 && xhr.status==200) {
+				    		if(xhr.responseText == "success") {
+				    			//Redirect to main
+								alert("Upload processeed.");
+								var prevLoc = window.location.href.split("/");
+								var toLoc="";
+								for(var i=0; i<prevLoc.length-1;i++)
+									toLoc+=prevLoc[i]+'/';
+								toLoc+='index.html';
+								window.location.href=toLoc;
+				    		} else {
+				    			alert("There was a problem connecting to the database. Please try again later.");
+				    		}
+				    	}
+					}
+					xhr.onerror = function() {
+						alert('Woops, there was an error making the request to the server.');
+						return false;
+					};
+					xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+					/******************** Convert to JSON **********************/
+					var checkBoxes = $(".ptag input").toArray();
+					var cats = "";
+					for(var i=0; i<checkBoxes.length; i++) 
+						if($("#"+checkBoxes[i].id).prop('checked'))
+							cats += checkBoxes[i].value + ",";
+					var parts = "";
+					for(var e in emails)
+						parts += emails[e] + ",";
+					var content = {
+						pid : pid,
+						participants : parts,
+						coverPhotoPath : imgURL,
+						projectDesc : $("#projComments").val(),
+						pname : $("#pname").val(),
+						term : $("#pterm option:selected").val(),
+						docPath : $("#purl").val(),
+						status : $("#pstatus option:selected").val(),
+						pcategory : cats
+					};
+					xhr.send(JSON.stringify(content));
+					/******************** END Convert to JSON **********************/
 				}
-				var xhr = createCORSRequest("POST",url + reqEnd);
-				xhr.onreadystatechange=function() {
-					if (xhr.readyState==4 && xhr.status==200) {
-			    		if(xhr.responseText == "success") {
-			    			//Redirect to main
-							alert("Upload processeed.");
-							var prevLoc = window.location.href.split("/");
-							var toLoc="";
-							for(var i=0; i<prevLoc.length-1;i++)
-								toLoc+=prevLoc[i]+'/';
-							toLoc+='index.html';
-							window.location.href=toLoc;
-			    		} else {
-			    			alert("There was a problem connecting to the database. Please try again later.");
-			    		}
-			    	}
-				}
-				xhr.onerror = function() {
-					alert('Woops, there was an error making the request to the server.');
-					return false;
-				};
-				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-				/******************** Convert to JSON **********************/
-				var checkBoxes = $(".ptag input").toArray();
-				var cats = "";
-				for(var i=0; i<checkBoxes.length; i++) 
-					if($("#"+checkBoxes[i].id).prop('checked'))
-						cats += checkBoxes[i].value + ",";
-				var parts = "";
-				for(var e in emails)
-					parts += emails[e] + ",";
-				var content = {
-					pid : pid,
-					participants : parts,
-					coverPhotoPath : imgURL,
-					projectDesc : $("#projComments").val(),
-					pname : $("#pname").val(),
-					term : $("#pterm option:selected").val(),
-					docPath : $("#purl").val(),
-					status : $("#pstatus option:selected").val(),
-					pcategory : cats
-				};
-				xhr.send(JSON.stringify(content));
-				/******************** END Convert to JSON **********************/
-			}
-		});
+			});
+		}
 	}
 	/************** END Check duplicate contributer name **************/
 }
