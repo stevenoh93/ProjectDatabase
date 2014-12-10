@@ -108,11 +108,26 @@ function submitNewProj() {
 					alert("There was an error at the database");
 				else {
 					var curUser = JSON.parse(data[0]);
+					var curEmails = [];
 					if(data.length > 2) {
-						var promptString = "We've found the following users with the name " + curUser.firstName +" " + curUser.lastName + ". Please select one or another email: \n";
-						for(var i; i<data.length-1; i++)
-							promptString += curUser.email + "\n";
-						emails.push(prompt(promptString));
+						var promptString = "We found the following users with the name " + curUser.firstName +" " + curUser.lastName + ". Please choose one from below: \n";
+						for(var i=0; i<data.length-1; i++) {
+							promptString += JSON.parse(data[i]).email + "\n";
+							curEmails.push(JSON.parse(data[i]).email);
+						}
+						var done = false;
+						while(!done) {
+							var ans = prompt(promptString);
+							if(!ans)
+								return false;
+							if(ans.length>0 && emails.indexOf(ans) < 0 && curEmails.indexOf(ans) >= 0) {
+								emails.push(ans);
+								done=true;
+							}
+							else 
+								alert(ans + " is not one of the valid email addresses. Please try again");
+						}
+						count++;
 					} else if (curUser.email == "err") {
 						alert(curUser.firstName + " " + curUser.lastName +" is not a registered user. You cannot add a non-registered user.");
 						return false;
@@ -143,7 +158,7 @@ function submitNewProj() {
 								toLoc+='index.html';
 								window.location.href=toLoc;
 				    		} else {
-				    			alert("There was a problem connecting to the database. Please try again later.");
+				    			alert("There was a problem uploading. Please check all fields are correct.");
 				    		}
 				    	}
 					}

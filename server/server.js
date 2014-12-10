@@ -398,6 +398,8 @@ function start(route) {
 										response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
 										response.write("fail");
 										response.end();
+										// Delete the project that was just made
+										connection.query("DELETE FROM ece464.projects WHERE pid=" + aContents["pid"]);
 									} else {
 										if(count == emails.length-1) {
 											response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
