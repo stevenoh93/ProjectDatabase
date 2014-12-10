@@ -93,6 +93,7 @@ function submitNewProj() {
 	/************** Check duplicate contributer name **************/
 	var emails = [];
 	var contributers = document.getElementById("sid").value.split("\n");
+	var count=0;
 	for(var c in contributers) {
 		makeCORSRequest("GET",url+'getNames/name=' + contributers[c].replace(" ","_"), function(data) {
 			if(data == 'err')
@@ -107,12 +108,13 @@ function submitNewProj() {
 					var p = JSON.parse(data[0]).email;
 					if(emails.indexOf(p) < 0) 
 						emails.push(p);
+					count++;
 				} else {
 					alert(contributers[c] +" is not a registered user. You cannot add a non-registered user.");
 					return false;
 				}
 			}
-			if(emails.length == contributers.length) { // Went through all the contributers
+			if(count == contributers.length) { // Went through all the contributers
 				// Make request type
 				var reqEnd="";
 				if(pid==='new'){
