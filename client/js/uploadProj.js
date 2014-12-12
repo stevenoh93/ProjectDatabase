@@ -81,11 +81,9 @@ function submitNewProj() {
 		alert("You must have at least one contributer");
 		return false;
 	}
-	var imgext = $("#fileToUpload").val();
-	imgext = imgext.substring(imgext.length-3,imgext.length);
-	if(!(imgext.toLowerCase() == 'jpg' || imgext.toLowerCase() == 'png' || $("#preview").attr('src').length >0)) {
-		$("#fileToUpload").focus();
-		alert("This type of file is not supported");
+	var purl = $("#purl").val();
+	if(desc.indexOf('\\')>=0 || name.indexOf('\\')>=0 || sid.indexOf('\\')>=0 || purl.indexOf('\\')>=0) {
+		alert("Please refrain from using backslashes");
 		return false;
 	}
 	/************** END form validation **************/
@@ -221,6 +219,14 @@ function deleteProj() {
 // Load preview
 function readURL(input) {
     if (input.files && input.files[0]) {
+    	var imgext = $("#fileToUpload").val();
+		imgext = imgext.substring(imgext.length-3,imgext.length);
+		console.log(imgext);
+		if(!(imgext.toLowerCase() == 'jpg' || imgext.toLowerCase() == 'png')) {
+			alert("This type of file is not supported");
+			$("#fileToUpload").val(null);
+			return false;
+		}
         var reader = new FileReader();
 
         reader.onload = function (e) {
