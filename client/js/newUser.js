@@ -19,7 +19,7 @@ function submit() {
 	}
 	if(pwd.val().length < 8) {
 		pwd.focus();
-		alert('Password length must be greater than 7');
+		alert('Password must be at least 8 characters long');
 		return false;
 	}
 	if(fn.val().indexOf("\\")>=0 || ln.val().indexOf("\\")>=0 || em.val().indexOf("\\")>=0 || pwd.val().indexOf("\\")>=0) {
