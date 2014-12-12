@@ -8,11 +8,10 @@ jQuery(document).ready(function($) {
 			if(i == 0)
 				var curChar = char0;
 			else 
-				if(curChar != char0) {curChar = char0;}
+				if(curChar != char0) {$('#letter-'+curChar).append('<li><a href="#" class="to-list"> Return to list</a></li>'); curChar = char0;}
 			
 			$('#letter-'+curChar).append("<li><a href='student.html?sid="+curData.sid+"'> "+ curData.lastName + ", " + curData.firstName + " </a></li>");
 		}
-		$('#letter-'+curChar).append('<li><a href="#" class="to-list"> Return to list</a></li>');
 	});
 });
 
