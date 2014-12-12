@@ -6,7 +6,6 @@ jQuery(document).ready(function($) {
 
 function loadProjs(pageNum) {	
 	// Get current page number
-	console.log("Page changed to " + pageNum);
 	makeCORSRequest('GET','http://72.76.204.54:8888/load/pg=' + pageNum, function(data) {
 		if(data == 'err')
 			alert('Something went wrong');

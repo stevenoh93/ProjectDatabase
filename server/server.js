@@ -440,6 +440,23 @@ function start(route) {
 					}
 				});
 			}
+			else if(pathname.indexOf("/list") == 0) {
+				connection.query("SELECT sid, firstName, lastName FROM ece464.students ORDER BY lastName ASC, firstName ASC;", function(err, rows) {
+					if(err) {
+						console.log(err);
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						response.write("fail");
+						response.end();
+					} else {
+						response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*', 'Access-Control-Allow-Credentials' : 'true'});
+						for(var i=0; i<rows.length; i++) {
+							response.write(JSON.stringify(rows[i]) + ";;;");
+						}
+						response.end();
+					}
+				});
+				connection.end();
+			}
 		}
 
 		connection.on('error', function(err) {
